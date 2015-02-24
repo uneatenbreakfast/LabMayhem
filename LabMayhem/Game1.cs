@@ -7,16 +7,18 @@ namespace LabMayhem
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class Game1 : Game
+    public class GameMain : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public Game1() : base()
+        Texture2D girl;
+
+        public GameMain()  : base()
         {
             graphics = new GraphicsDeviceManager(this);
-            this.IsMouseVisible = true;
             Content.RootDirectory = "Content";
+            this.IsMouseVisible = true;
         }
 
         /// <summary>
@@ -42,6 +44,7 @@ namespace LabMayhem
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+            girl = this.Content.Load<Texture2D>("Images/scientist_girl_back");
         }
 
         /// <summary>
@@ -74,7 +77,12 @@ namespace LabMayhem
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.PaleGreen);
+            GraphicsDevice.Clear(Color.Salmon);
+
+            spriteBatch.Begin();
+            spriteBatch.Draw(girl, new Rectangle(50, 50, girl.Width, girl.Height), Color.White);
+            spriteBatch.End();
+
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
