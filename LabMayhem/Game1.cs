@@ -15,6 +15,7 @@ namespace LabMayhem
         public Game1() : base()
         {
             graphics = new GraphicsDeviceManager(this);
+            this.IsMouseVisible = true;
             Content.RootDirectory = "Content";
         }
 
@@ -73,7 +74,7 @@ namespace LabMayhem
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Gainsboro);
 
             // TODO: Add your drawing code here
 
