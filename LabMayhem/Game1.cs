@@ -74,12 +74,7 @@ namespace LabMayhem
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-<<<<<<< HEAD
             GraphicsDevice.Clear(Color.PaleGreen);
-=======
-            GraphicsDevice.Clear(Color.Gainsboro);
->>>>>>> origin/master
-
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
