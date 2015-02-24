@@ -83,8 +83,6 @@ namespace LabMayhem
             spriteBatch.Draw(girl, new Rectangle(50, 50, girl.Width, girl.Height), Color.White);
             spriteBatch.End();
 
-            // TODO: Add your drawing code here
-
             base.Draw(gameTime);
         }
     }
