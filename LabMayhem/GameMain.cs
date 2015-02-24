@@ -13,6 +13,7 @@ namespace LabMayhem
         SpriteBatch spriteBatch;
 
         Texture2D girl;
+        Texture2D girlb;
 
         public GameMain()  : base()
         {
@@ -44,7 +45,8 @@ namespace LabMayhem
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            girl = this.Content.Load<Texture2D>("Images/scientist_girl_back");
+            girl = this.Content.Load<Texture2D>("Images/scientist_girl_front");
+            girlb = this.Content.Load<Texture2D>("Images/scientist_girl_back");
         }
 
         /// <summary>
@@ -81,6 +83,8 @@ namespace LabMayhem
 
             spriteBatch.Begin();
             spriteBatch.Draw(girl, new Rectangle(50, 50, girl.Width, girl.Height), Color.White);
+
+            spriteBatch.Draw(girlb, new Rectangle(50, 100, girlb.Width, girlb.Height), Color.White);
             spriteBatch.End();
 
             base.Draw(gameTime);
