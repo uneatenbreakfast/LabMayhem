@@ -82,7 +82,7 @@ namespace LabMayhem
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Salmon);
+            GraphicsDevice.Clear(Color.NavajoWhite);
             spriteBatch.Begin();
             //
 
