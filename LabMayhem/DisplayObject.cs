@@ -14,10 +14,8 @@ namespace LabMayhem
         public int width;
         public int height;
 
-        public Texture2D activeTexture;
-
-
         public abstract Texture2D getTexture();
         public abstract Rectangle getDrawRectangle();
+        public abstract void update(GameTime gameTime);
     }
 }

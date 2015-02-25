@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 
 namespace LabMayhem
@@ -10,33 +11,40 @@ namespace LabMayhem
     /// </summary>
     public class GameMain : Game
     {
-        GraphicsDeviceManager graphics;
+        public static GameMain gameMain;
+        public static GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
         List<DisplayObject> displayList = new List<DisplayObject>();
 
 
+
         public GameMain()  : base()
         {
+            gameMain = this;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             this.IsMouseVisible = true;
         }
+        public static GameMain getInstance()
+        {
+            return gameMain;
+        }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
         protected override void Initialize()
         {
             base.Initialize();
+         
+            Random r = new Random();
+
+            int nx = 100;// r.Next(1000);
+            int ny = 100;// r.Next(1000);
 
             Person emily = new Person(this.Content);
+            emily.x = nx;
+            emily.y = ny;
 
             addToStage(emily);
-
         }
 
         protected override void LoadContent() {
@@ -57,6 +65,11 @@ namespace LabMayhem
 
             // TODO: Add your update logic here
 
+            foreach (DisplayObject dis in displayList)
+            {
+                dis.update(gameTime);
+            }
+
             base.Update(gameTime);
         }
 
@@ -66,11 +79,10 @@ namespace LabMayhem
             spriteBatch.Begin();
             //
 
-
-            foreach(DisplayObject dis in displayList){
-               spriteBatch.Draw(dis.getTexture() , dis.getDrawRectangle(), Color.AliceBlue);
+            foreach (DisplayObject dis in displayList)
+            {
+                spriteBatch.Draw(dis.getTexture(), dis.getDrawRectangle(), Color.AliceBlue);
             }
-
 
             //
             spriteBatch.End();
@@ -82,14 +94,6 @@ namespace LabMayhem
         {
             displayList.Add(ds);
         }
-
-
-
-
-
-
-
-
 
 
         //
