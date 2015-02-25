@@ -9,8 +9,8 @@ namespace LabMayhem
 {
     public abstract class DisplayObject
     {
-        public int x;
-        public int y;
+        public float x;
+        public float y;// in regards to depth (eg. zero is the point between the feet )
         public int width;
         public int height;
 

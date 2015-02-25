@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace LabMayhem
 {
@@ -37,14 +38,17 @@ namespace LabMayhem
          
             Random r = new Random();
 
-            int nx = 100;// r.Next(1000);
-            int ny = 100;// r.Next(1000);
+            for (int i = 0; i < 10; i++) { 
+                int nx =  r.Next(1000);
+                int ny =  r.Next(1000);
 
-            Person emily = new Person(this.Content);
-            emily.x = nx;
-            emily.y = ny;
+                Person emily = new Person(this.Content);
+                emily.x = nx;
+                emily.y = ny;
+                emily.moveTo(100, 300);
 
-            addToStage(emily);
+                addToStage(emily);
+            }
         }
 
         protected override void LoadContent() {
@@ -69,6 +73,9 @@ namespace LabMayhem
             {
                 dis.update(gameTime);
             }
+
+
+            displayList = (from d in displayList orderby d.y select d).ToList<DisplayObject>();
 
             base.Update(gameTime);
         }
