@@ -40,7 +40,7 @@ namespace LabMayhem
         private int spriteWidth = 48;
         private int currentFrame = 0;
         private int[] maxFrame = new int[] { 2, 4, 2, 4 };
-        private float[] frameInterval = new float[] { 300f, 300f, 300f, 150f };
+        private float[] frameInterval = new float[] { 300f, 150f, 300f, 150f };
         private float spriteIntervalTimer;
 
         //
