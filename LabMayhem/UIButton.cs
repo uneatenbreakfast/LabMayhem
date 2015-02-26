@@ -19,12 +19,12 @@ namespace LabMayhem {
             gameMain = GameMain.getInstance();
         }
 
-        public override Microsoft.Xna.Framework.Graphics.Texture2D getTexture() {
+        public override Texture2D getTexture() {
             return buttonTexture;
         }
 
-        public override Microsoft.Xna.Framework.Rectangle getDrawRectangle() {
-            return new Microsoft.Xna.Framework.Rectangle((int)x, (int)y, buttonTexture.Width, buttonTexture.Height);
+        public override Rectangle getDrawRectangle() {
+            return new Rectangle(0, 600-buttonTexture.Height, buttonTexture.Width, buttonTexture.Height);
         }
 
         public override void update(Microsoft.Xna.Framework.GameTime gameTime) {
