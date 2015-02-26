@@ -15,12 +15,9 @@ namespace LabMayhem
         public static GameMain gameMain;
         public GraphicsDeviceManager graphics;
         public SpriteBatch spriteBatch;
-
         
         MapManager mapManager;
         List<DisplayObject> displayList = new List<DisplayObject>();
-
-
 
         public GameMain()  : base()
         {
@@ -38,17 +35,15 @@ namespace LabMayhem
             return gameMain;
         }
 
-        protected override void Initialize()
-        {
+        protected override void Initialize() {
             base.Initialize();
             mapManager = MapManager.getInstance();
 
-         
             Random r = new Random();
 
-            for (int i = 0; i < 10; i++) { 
-                int nx =  r.Next(1000);
-                int ny =  r.Next(1000);
+            for (int i = 0; i < 10; i++) {
+                int nx = r.Next(1000);
+                int ny = r.Next(600);
 
                 Person emily = new Person(this.Content);
                 emily.x = nx;
@@ -57,11 +52,10 @@ namespace LabMayhem
 
                 addToStage(emily);
             }
-            UIButton randomButton = new UIButton
-            randomButton.x = 0;
-            randomButton.y = 0;
 
+            UIButton randomButton = new UIButton(this.Content);
         }
+
 
         protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
@@ -103,6 +97,10 @@ namespace LabMayhem
                 spriteBatch.Draw(dis.getTexture(), dis.getDrawRectangle(), Color.AliceBlue);
             }
 
+
+
+
+
             //
             spriteBatch.End();
             base.Draw(gameTime);
@@ -114,7 +112,5 @@ namespace LabMayhem
             displayList.Add(ds);
         }
 
-
-        //
     }
 }
