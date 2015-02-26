@@ -13,9 +13,10 @@ namespace LabMayhem
     public class GameMain : Game
     {
         public static GameMain gameMain;
-        public static GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        public GraphicsDeviceManager graphics;
+        public SpriteBatch spriteBatch;
 
+        MapManager mapManager;
         List<DisplayObject> displayList = new List<DisplayObject>();
 
 
@@ -25,9 +26,13 @@ namespace LabMayhem
             gameMain = this;
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            graphics.PreferredBackBufferWidth = 1000;  // set this value to the desired width of your window
+            graphics.PreferredBackBufferHeight = 600;   // set this value to the desired height of your window
+
             this.IsMouseVisible = true;
         }
-        public static GameMain getInstance()
+        public static GameMain getInstance() // singleton
         {
             return gameMain;
         }
@@ -35,6 +40,8 @@ namespace LabMayhem
         protected override void Initialize()
         {
             base.Initialize();
+            mapManager = MapManager.getInstance();
+
          
             Random r = new Random();
 

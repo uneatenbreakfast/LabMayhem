@@ -55,6 +55,8 @@
   <ItemGroup>
     <Compile Include="DisplayObject.cs" />
     <Compile Include="GameMain.cs" />
+    <Compile Include="MapManager.cs" />
+    <Compile Include="MapObject.cs" />
     <Compile Include="Person.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

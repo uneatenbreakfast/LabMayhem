@@ -13,6 +13,7 @@ namespace LabMayhem
     {
         private ContentManager content;
         private Texture2D characterTexture;
+        private GameMain gameMain;
 
         // character state
         public enum CharacterState
@@ -48,6 +49,7 @@ namespace LabMayhem
         {
             content = cloader;
             characterTexture = content.Load<Texture2D>("Images/girlscientist");
+            gameMain = GameMain.getInstance();
         }
 
 
@@ -70,7 +72,7 @@ namespace LabMayhem
         private Texture2D getImagePart(Texture2D originalTexture)
         {
             Rectangle srcRec = new Rectangle(currentFrame * spriteWidth, (int) animationNum * spriteHeight, spriteWidth, spriteHeight);
-            Texture2D cropTexture = new Texture2D(GameMain.graphics.GraphicsDevice, srcRec.Width, srcRec.Height);
+            Texture2D cropTexture = new Texture2D(gameMain.graphics.GraphicsDevice, srcRec.Width, srcRec.Height);
         
             Color[] data = new Color[srcRec.Width * srcRec.Height];
             originalTexture.GetData(0, srcRec, data, 0, data.Length);
