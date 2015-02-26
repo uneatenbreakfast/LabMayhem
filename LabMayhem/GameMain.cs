@@ -54,6 +54,7 @@ namespace LabMayhem
             }
 
             UIButton randomButton = new UIButton(this.Content);
+            addToStage(randomButton);
         }
 
 

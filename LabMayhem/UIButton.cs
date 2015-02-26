@@ -15,26 +15,16 @@ namespace LabMayhem {
 
         public UIButton(ContentManager cloader) {
             content = cloader;
-            buttonTexture = content.Load<Texture2D>("Images/girlscientist");
+            buttonTexture = content.Load<Texture2D>("Images/button");
             gameMain = GameMain.getInstance();
         }
 
-        private Texture2D getImagePart(Texture2D originalTexture) {
-            Rectangle srcRec = new Rectangle(48, 48, 48, 48);
-            Texture2D cropTexture = new Texture2D(gameMain.graphics.GraphicsDevice, srcRec.Width, srcRec.Height);
-            Color[] data = new Color[srcRec.Width * srcRec.Height];
-            originalTexture.GetData(0, srcRec, data, 0, data.Length);
-            cropTexture.SetData(data);
-
-            return cropTexture;
-        }
-
         public override Microsoft.Xna.Framework.Graphics.Texture2D getTexture() {
-            return getImagePart(buttonTexture);
+            return buttonTexture;
         }
 
         public override Microsoft.Xna.Framework.Rectangle getDrawRectangle() {
-            return new Microsoft.Xna.Framework.Rectangle((int)x, (int)y, 48, 48);
+            return new Microsoft.Xna.Framework.Rectangle((int)x, (int)y, buttonTexture.Width, buttonTexture.Height);
         }
 
         public override void update(Microsoft.Xna.Framework.GameTime gameTime) {
