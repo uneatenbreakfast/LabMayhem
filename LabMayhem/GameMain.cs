@@ -16,6 +16,7 @@ namespace LabMayhem
         public GraphicsDeviceManager graphics;
         public SpriteBatch spriteBatch;
 
+        
         MapManager mapManager;
         List<DisplayObject> displayList = new List<DisplayObject>();
 
@@ -56,6 +57,7 @@ namespace LabMayhem
 
                 addToStage(emily);
             }
+
         }
 
         protected override void LoadContent() {

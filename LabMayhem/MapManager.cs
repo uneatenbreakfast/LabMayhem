@@ -20,7 +20,7 @@ namespace LabMayhem
 
             int rows = gameMain.graphics.PreferredBackBufferWidth / tileWidth;
             int cols = gameMain.graphics.PreferredBackBufferHeight / tileHeight;
-            map = new MapObject[rows, cols];            
+            map = new MapObject[rows, cols];
         }
 
         public static MapManager getInstance() // singleton
