@@ -33,7 +33,7 @@ namespace LabMayhem
 
             this.IsMouseVisible = true;
         }
-        public static GameMain getInstance() // singleton
+        public static GameMain getInstance() // singleton - To refer back to GameMain
         {
             return gameMain;
         }
@@ -57,6 +57,9 @@ namespace LabMayhem
 
                 addToStage(emily);
             }
+            UIButton randomButton = new UIButton
+            randomButton.x = 0;
+            randomButton.y = 0;
 
         }
 

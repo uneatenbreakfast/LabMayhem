@@ -53,6 +53,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="UIButton.cs" />
     <Compile Include="DisplayObject.cs" />
     <Compile Include="GameMain.cs" />
     <Compile Include="MapManager.cs" />
