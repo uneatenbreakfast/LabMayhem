@@ -101,7 +101,7 @@ namespace LabMayhem
             }
 
 
-            displayList = (from d in displayList orderby d.y select d).ToList<DisplayObject>();
+            displayList = (from d in displayList.ToList() orderby d.y select d).ToList<DisplayObject>();
 
             base.Update(gameTime);
         }
