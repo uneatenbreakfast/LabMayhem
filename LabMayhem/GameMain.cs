@@ -22,6 +22,9 @@ namespace LabMayhem
         List<DisplayObject> displayList = new List<DisplayObject>();
         List<DisplayObject> tempDisplayList = new List<DisplayObject>();
 
+        private SpriteFont oswald;
+        private SpriteFont featureditem;
+
         public GameMain()  : base()
         {
             gameMain = this;
@@ -51,7 +54,7 @@ namespace LabMayhem
 
             // Add characters
             Random r = new Random();
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 1; i++)
             {
                 int nx = r.Next(1000);
                 int ny = r.Next(600);
@@ -68,6 +71,8 @@ namespace LabMayhem
         protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            oswald = Content.Load<SpriteFont>("Fonts/oswald-20");
+            featureditem = Content.Load<SpriteFont>("Fonts/featureditem-20");
         }
 
 
@@ -106,7 +111,17 @@ namespace LabMayhem
                 spriteBatch.Draw(dis.getTexture(), dis.getDrawRectangle(), Color.AliceBlue);
             }
             //
+            spriteBatch.DrawString(oswald, "Hello world", new Vector2(200, 200), Color.Black);
+
+
+            spriteBatch.DrawString(featureditem, "Hello Flash MAN", new Vector2(300, 200), Color.Black);
+            //
             spriteBatch.End();
+
+
+ 
+
+
             base.Draw(gameTime);
         }
         // Our functions

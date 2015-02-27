@@ -46,3 +46,15 @@
 /processorParam:TextureFormat=Color
 /build:Images/button.png
 
+#begin Fonts/oswald-20.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts/oswald-20.spritefont
+
+#begin Fonts/featureditem-20.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts/featureditem-20.spritefont
+

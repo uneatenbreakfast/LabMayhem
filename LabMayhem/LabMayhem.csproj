@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="HelperMethods.cs" />
     <Compile Include="MouseManager.cs" />
+    <Compile Include="TextField.cs" />
     <Compile Include="UIButton.cs" />
     <Compile Include="DisplayObject.cs" />
     <Compile Include="GameMain.cs" />
@@ -113,6 +114,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Images\button.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Fonts\featureditem-20.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Fonts\oswald-20.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

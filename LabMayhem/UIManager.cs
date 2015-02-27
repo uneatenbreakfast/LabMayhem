@@ -33,6 +33,7 @@ namespace LabMayhem
 
             // set up buttons
             UIButton addScientist = new UIButton(gameMain.Content);
+            addScientist.text = "New Scientist";
             addScientist.y = 600 - addScientist.height;
             addScientist.onClickAction(addNewScientist);
             gameMain.addToStage(addScientist);
