@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 
@@ -17,6 +19,14 @@ namespace LabMayhem {
             content = cloader;
             buttonTexture = content.Load<Texture2D>("Images/button");
             gameMain = GameMain.getInstance();
+
+            width = buttonTexture.Width;
+            height = buttonTexture.Height;
+
+        }
+        public void onClickAction(EventHandler cusEvent)
+        {
+            MouseManager.getInstance().addClickListener(this, cusEvent);
         }
 
         public override Texture2D getTexture() {
@@ -24,11 +34,10 @@ namespace LabMayhem {
         }
 
         public override Rectangle getDrawRectangle() {
-            return new Rectangle(0, 600-buttonTexture.Height, buttonTexture.Width, buttonTexture.Height);
+            return new Rectangle((int) x, (int) y, buttonTexture.Width, buttonTexture.Height);
         }
 
-        public override void update(Microsoft.Xna.Framework.GameTime gameTime) {
-            return;
+        public override void update(GameTime gameTime) {
         }
     }
 }

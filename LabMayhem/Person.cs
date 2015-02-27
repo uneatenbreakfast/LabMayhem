@@ -50,6 +50,9 @@ namespace LabMayhem
             content = cloader;
             characterTexture = content.Load<Texture2D>("Images/girlscientist");
             gameMain = GameMain.getInstance();
+
+            width = spriteWidth;
+            height = spriteHeight;
         }
 
 
@@ -177,6 +180,7 @@ namespace LabMayhem
 
         public override Rectangle getDrawRectangle()
         {
+            // positions the character on the stage
             return new Rectangle((int)(x - spriteWidth/2), (int)(y-spriteHeight+4), spriteWidth, spriteHeight);
         }
     }

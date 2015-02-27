@@ -17,6 +17,7 @@ namespace LabMayhem
         public SpriteBatch spriteBatch;
         
         MapManager mapManager;
+        MouseManager mouseManager;
         List<DisplayObject> displayList = new List<DisplayObject>();
 
         public GameMain()  : base()
@@ -38,6 +39,7 @@ namespace LabMayhem
         protected override void Initialize() {
             base.Initialize();
             mapManager = MapManager.getInstance();
+            mouseManager = MouseManager.getInstance();
 
             Random r = new Random();
 
@@ -54,8 +56,25 @@ namespace LabMayhem
             }
 
             UIButton randomButton = new UIButton(this.Content);
+            randomButton.y = 600 - randomButton.height;
+            randomButton.onClickAction(doer);
             addToStage(randomButton);
         }
+
+        private void doer(Object sender, EventArgs e)
+        {
+            Random r = new Random();
+            int nx = r.Next(1000);
+            int ny = r.Next(600);
+
+            Person emily = new Person(this.Content);
+            emily.x = nx;
+            emily.y = ny;
+            emily.moveTo(100, 300);
+
+            addToStage(emily);
+        }
+        
 
 
         protected override void LoadContent() {
@@ -92,16 +111,10 @@ namespace LabMayhem
             GraphicsDevice.Clear(Color.NavajoWhite);
             spriteBatch.Begin();
             //
-
             foreach (DisplayObject dis in displayList)
             {
                 spriteBatch.Draw(dis.getTexture(), dis.getDrawRectangle(), Color.AliceBlue);
             }
-
-
-
-
-
             //
             spriteBatch.End();
             base.Draw(gameTime);
