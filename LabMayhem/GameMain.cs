@@ -94,6 +94,7 @@ namespace LabMayhem
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            // add the new display objects onto the real displaylist
             displayList.AddRange(tempDisplayList);
             tempDisplayList.Clear();
 
@@ -125,6 +126,7 @@ namespace LabMayhem
 
         public void addToStage(DisplayObject ds)
         {
+            // a temporary list is needed so it prevents mid displaylist loop new insertion errors
             tempDisplayList.Add(ds);
         }
 
