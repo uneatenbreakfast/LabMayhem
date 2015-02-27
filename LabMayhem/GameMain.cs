@@ -42,9 +42,16 @@ namespace LabMayhem
             mapManager = MapManager.getInstance();
             mouseManager = MouseManager.getInstance();
 
-            Random r = new Random();
+            // Set up GUI
+            UIButton randomButton = new UIButton(this.Content);
+            randomButton.y = 600 - randomButton.height;
+            randomButton.onClickAction(doer);
+            addToStage(randomButton);
 
-            for (int i = 0; i < 10; i++) {
+            // Add characters
+            Random r = new Random();
+            for (int i = 0; i < 10; i++)
+            {
                 int nx = r.Next(1000);
                 int ny = r.Next(600);
 
@@ -55,11 +62,6 @@ namespace LabMayhem
 
                 addToStage(emily);
             }
-
-            UIButton randomButton = new UIButton(this.Content);
-            randomButton.y = 600 - randomButton.height;
-            randomButton.onClickAction(doer);
-            addToStage(randomButton);
         }
 
         private void doer(Object sender, EventArgs e)
