@@ -75,13 +75,7 @@ namespace LabMayhem
         private Texture2D getImagePart(Texture2D originalTexture)
         {
             Rectangle srcRec = new Rectangle(currentFrame * spriteWidth, (int) animationNum * spriteHeight, spriteWidth, spriteHeight);
-            Texture2D cropTexture = new Texture2D(gameMain.graphics.GraphicsDevice, srcRec.Width, srcRec.Height);
-        
-            Color[] data = new Color[srcRec.Width * srcRec.Height];
-            originalTexture.GetData(0, srcRec, data, 0, data.Length);
-            cropTexture.SetData(data);
-
-            return cropTexture;
+            return HelperMethods.cropImage(originalTexture, srcRec);
         }
 
         private void processAnimation(GameTime gameTime)

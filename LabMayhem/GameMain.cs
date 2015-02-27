@@ -18,6 +18,7 @@ namespace LabMayhem
         
         MapManager mapManager;
         MouseManager mouseManager;
+        UIManager uiManager;
         List<DisplayObject> displayList = new List<DisplayObject>();
         List<DisplayObject> tempDisplayList = new List<DisplayObject>();
 
@@ -39,14 +40,14 @@ namespace LabMayhem
 
         protected override void Initialize() {
             base.Initialize();
+
+            // Set up
             mapManager = MapManager.getInstance();
             mouseManager = MouseManager.getInstance();
+            uiManager = UIManager.getInstance();
 
             // Set up GUI
-            UIButton randomButton = new UIButton(this.Content);
-            randomButton.y = 600 - randomButton.height;
-            randomButton.onClickAction(doer);
-            addToStage(randomButton);
+            uiManager.init();
 
             // Add characters
             Random r = new Random();
@@ -63,22 +64,6 @@ namespace LabMayhem
                 addToStage(emily);
             }
         }
-
-        private void doer(Object sender, EventArgs e)
-        {
-            Random r = new Random();
-            int nx = r.Next(1000);
-            int ny = r.Next(600);
-
-            Person emily = new Person(this.Content);
-            emily.x = nx;
-            emily.y = ny;
-            emily.moveTo(100, 300);
-
-            addToStage(emily);
-        }
-        
-
 
         protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
