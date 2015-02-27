@@ -19,6 +19,7 @@ namespace LabMayhem
         MapManager mapManager;
         MouseManager mouseManager;
         List<DisplayObject> displayList = new List<DisplayObject>();
+        List<DisplayObject> tempDisplayList = new List<DisplayObject>();
 
         public GameMain()  : base()
         {
@@ -93,15 +94,16 @@ namespace LabMayhem
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            displayList.AddRange(tempDisplayList);
+            tempDisplayList.Clear();
 
-            foreach (DisplayObject dis in displayList.ToList())
+            foreach (DisplayObject dis in displayList)
             {
                 dis.update(gameTime);
             }
 
 
-            displayList = (from d in displayList.ToList() orderby d.y select d).ToList<DisplayObject>();
+            displayList = (from d in displayList orderby d.y select d).ToList<DisplayObject>();
 
             base.Update(gameTime);
         }
@@ -111,7 +113,7 @@ namespace LabMayhem
             GraphicsDevice.Clear(Color.NavajoWhite);
             spriteBatch.Begin();
             //
-            foreach (DisplayObject dis in displayList.ToList())
+            foreach (DisplayObject dis in displayList)
             {
                 spriteBatch.Draw(dis.getTexture(), dis.getDrawRectangle(), Color.AliceBlue);
             }
@@ -123,7 +125,7 @@ namespace LabMayhem
 
         public void addToStage(DisplayObject ds)
         {
-            displayList.Add(ds);
+            tempDisplayList.Add(ds);
         }
 
     }
