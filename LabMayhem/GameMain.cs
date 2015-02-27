@@ -95,7 +95,7 @@ namespace LabMayhem
 
             // TODO: Add your update logic here
 
-            foreach (DisplayObject dis in displayList)
+            foreach (DisplayObject dis in displayList.ToList())
             {
                 dis.update(gameTime);
             }
@@ -111,7 +111,7 @@ namespace LabMayhem
             GraphicsDevice.Clear(Color.NavajoWhite);
             spriteBatch.Begin();
             //
-            foreach (DisplayObject dis in displayList)
+            foreach (DisplayObject dis in displayList.ToList())
             {
                 spriteBatch.Draw(dis.getTexture(), dis.getDrawRectangle(), Color.AliceBlue);
             }
