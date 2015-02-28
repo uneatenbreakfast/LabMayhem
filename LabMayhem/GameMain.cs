@@ -121,7 +121,7 @@ namespace LabMayhem
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.DarkGray);
+            GraphicsDevice.Clear(Color.DimGray);
             spriteBatch.Begin();
 
             // draw grid
