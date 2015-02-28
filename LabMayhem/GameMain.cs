@@ -17,7 +17,7 @@ namespace LabMayhem
         public SpriteBatch spriteBatch;
         
         MapManager mapManager;
-        MouseManager mouseManager;
+        MouseEventListenerManager mouseManager;
         UIManager uiManager;
         List<ImageDisplayObject> displayList = new List<ImageDisplayObject>();
         List<ImageDisplayObject> tempDisplayList = new List<ImageDisplayObject>();
@@ -48,7 +48,7 @@ namespace LabMayhem
 
             // Set up
             mapManager = MapManager.getInstance();
-            mouseManager = MouseManager.getInstance();
+            mouseManager = MouseEventListenerManager.getInstance();
             uiManager = UIManager.getInstance();
 
             // Set up GUI

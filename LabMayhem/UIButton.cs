@@ -51,7 +51,7 @@ namespace LabMayhem {
         }
         public void onClickAction(EventHandler cusEvent)
         {
-            MouseManager.getInstance().addClickListener(this, cusEvent);
+            MouseEventListenerManager.getInstance().addClickListener(this, cusEvent);
         }
 
         private void setUpTextField()

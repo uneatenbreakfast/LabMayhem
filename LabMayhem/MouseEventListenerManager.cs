@@ -8,9 +8,10 @@ using System.Text;
 
 namespace LabMayhem
 {
-    class MouseManager
+    class MouseEventListenerManager
     {
-        private static MouseManager mouseManager;
+        private static MouseEventListenerManager mouseManager;
+        private static object padLock = new object();
 
         public Dictionary<ImageDisplayObject, EventHandler> eventHandlerDic = new Dictionary<ImageDisplayObject,EventHandler>();
         private List<ImageDisplayObject> buttons = new List<ImageDisplayObject>();
@@ -18,7 +19,7 @@ namespace LabMayhem
 
         private MouseState lastMouseState;
 
-        public MouseManager()
+        public MouseEventListenerManager()
         {
             if (mouseManager != null)
             {
@@ -28,10 +29,10 @@ namespace LabMayhem
             lastMouseState = Mouse.GetState();
         }
 
-        public static MouseManager getInstance(){
+        public static MouseEventListenerManager getInstance(){
             if (mouseManager == null)
             {
-                mouseManager = new MouseManager();
+                mouseManager = new MouseEventListenerManager();
             }
             return mouseManager;
         }
@@ -39,7 +40,12 @@ namespace LabMayhem
         public void addClickListener(ImageDisplayObject ob, EventHandler funcdelegate)
         {
             eventHandlerDic.Add(ob, funcdelegate);
-            buttons.Add(ob);
+
+            lock (padLock)
+            {
+                buttons.Add(ob);
+            }
+           
 
             if (bw == null)
             {
@@ -53,7 +59,14 @@ namespace LabMayhem
                         var ms = Mouse.GetState();
                         Point msPoint = new Point(ms.X, ms.Y);
 
-                        foreach (ImageDisplayObject btn in buttons.ToList())
+
+                        List<ImageDisplayObject> blist = new List<ImageDisplayObject>();
+                        lock (padLock)
+                        {
+                            blist = buttons.ToList();
+                        }
+                        
+                        foreach (ImageDisplayObject btn in blist)
                         {
                             if (btn == null)
                             {

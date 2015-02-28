@@ -57,7 +57,7 @@
     <Compile Include="FrameRateCounter.cs" />
     <Compile Include="HelperMethods.cs" />
     <Compile Include="Materials.cs" />
-    <Compile Include="MouseManager.cs" />
+    <Compile Include="MouseEventListenerManager.cs" />
     <Compile Include="TextField.cs" />
     <Compile Include="UIButton.cs" />
     <Compile Include="ImageDisplayObject.cs" />
