@@ -27,6 +27,16 @@ namespace LabMayhem
         public static int gameHeight  = 600;
         public static int gridSize    = 32;
 
+        //
+        private List<ImageDisplayObject> pavementTiles;
+        private List<ImageDisplayObject> map_objects;
+        private List<ImageDisplayObject> wallstiles;
+
+
+
+
+        //
+
         public GameMain()  : base()
         {
             gameMain = this;
@@ -59,13 +69,12 @@ namespace LabMayhem
 
             // Add characters
 
-            Person emily = new Person(this.Content);
+            Person emily = new Person("Images/girlscientist");
             emily.x = gameWidth/2;
             emily.y = gameHeight/2;
             emily.moveTo(100, 300);
 
             addToStage(emily);
-            
         }
 
         protected override void LoadContent() {
@@ -85,6 +94,16 @@ namespace LabMayhem
                 Exit();
 
             uiManager.update(gameTime);
+
+
+            // get all the map tiles
+            List<ImageDisplayObject>[] bgtiles = mapManager.getMapTiles();
+            pavementTiles = bgtiles[0];
+            map_objects = bgtiles[1];
+            wallstiles = bgtiles[2];
+
+
+
             // add the new display objects onto the real displaylist
             displayList.AddRange(tempDisplayList);
             tempDisplayList.Clear();
@@ -102,34 +121,25 @@ namespace LabMayhem
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.NavajoWhite);
+            GraphicsDevice.Clear(Color.DarkGray);
             spriteBatch.Begin();
 
             // draw grid
             drawGrid();
 
-
-            // get all the map tiles
-            List<ImageDisplayObject>[] bgtiles = mapManager.getMapTiles();
-            List<ImageDisplayObject> pavementTiles  = bgtiles[0];
-            List<ImageDisplayObject> map_objects    = bgtiles[1];
-            List<ImageDisplayObject> wallstiles     = bgtiles[2];
-
             //draw ground and walls
             foreach (ImageDisplayObject dis in pavementTiles.Concat(wallstiles))
             {
-                spriteBatch.Draw(dis.getTexture(), dis.getDrawRectangle(), Color.White);
+                TileObject td = (TileObject) dis;
+                spriteBatch.Draw(dis.getTexture(), dis.getDrawRectangle(), td.getColor());
             }
 
             // display objects - merge the map objects with the characters
             var disobjlist = displayList.Concat(map_objects);
             foreach (ImageDisplayObject dis in disobjlist)
             {
-                spriteBatch.Draw(dis.getTexture(), dis.getDrawRectangle(), Color.White);
+                spriteBatch.Draw(dis.getTexture(), dis.getDrawRectangle(), dis.getColor());
             }
-
-
-
 
             // GUI - display and text
             foreach (DisplayObject dsb in uiManager.getGUIDisplayList() )

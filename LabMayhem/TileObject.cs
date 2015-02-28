@@ -40,5 +40,10 @@ namespace LabMayhem
         {
            //
         }
+
+        new public Color getColor()
+        {
+            return Color.White * 0.5f;
+        }
     }
 }

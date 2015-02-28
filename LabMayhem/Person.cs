@@ -46,12 +46,12 @@ namespace LabMayhem
         private float spriteIntervalTimer;
 
         //
-        public Person(ContentManager cloader) :base ()
+        public Person(string imgsrc) :base ()
         {
-            content = cloader;
-            characterTexture = content.Load<Texture2D>("Images/girlscientist");
             gameMain = GameMain.getInstance();
+            content = gameMain.Content;
 
+            characterTexture = content.Load<Texture2D>(imgsrc);
             int col = (int)characterTexture.Width / spriteWidth;
             int row = (int)characterTexture.Height/spriteHeight;
             textureStorage = new Texture2D[col, row];

@@ -55,13 +55,18 @@ namespace LabMayhem
             addScientist.onClickAction(addNewScientist);
             addToGUI(addScientist);
 
+            UIButton addFlash = new UIButton("Wally", Color.Red);
+            addFlash.y = 543;
+            addFlash.onClickAction(bringtheflash);
+            addToGUI(addFlash);
+
             Dictionary<int, string> mtrls = new Dictionary<int, string>();
             mtrls.Add( Materials.NONE, "None");
             mtrls.Add( Materials.WALL, "Wall");
             mtrls.Add( 2, "Chair");
             mtrls.Add( 3, "Pavement");
 
-            int btnNum = 1;
+            int btnNum = 2;
             foreach (KeyValuePair<int, string> e in mtrls)
             {
                 // do something with entry.Value or entry.Key
@@ -168,13 +173,33 @@ namespace LabMayhem
                  int nx = r.Next(1000);
                  int ny = r.Next(600);
 
-                 Person emily = new Person(gameMain.Content);
+                 Person emily = new Person("Images/girlscientist");
                  emily.x = nx;
                  emily.y = ny;
                  emily.moveTo(100, 300);
 
                  gameMain.addToStage(emily);
              }
+
+        }
+
+        private void bringtheflash(Object sender, EventArgs e)
+        {
+
+            Worker wally = new Worker("Images/CharacterBase_flash");
+            wally.x = 300;
+            wally.y = 300;
+            wally.moveTo(300, 300);
+
+            gameMain.addToStage(wally);
+            gameMain.addToStage(wally);
+            gameMain.addToStage(wally);
+            gameMain.addToStage(wally);
+            gameMain.addToStage(wally);
+            gameMain.addToStage(wally);
+            gameMain.addToStage(wally);
+            gameMain.addToStage(wally);
+
 
         }
 

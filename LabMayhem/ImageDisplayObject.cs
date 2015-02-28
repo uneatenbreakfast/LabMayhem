@@ -16,5 +16,10 @@ namespace LabMayhem
         public abstract Texture2D getTexture();
         public abstract Rectangle getDrawRectangle();
         public abstract void update(GameTime gameTime);
+
+        public Color getColor()
+        {
+            return Color.White;
+        }
     }
 }
