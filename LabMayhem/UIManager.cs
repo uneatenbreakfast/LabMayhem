@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,14 +34,13 @@ namespace LabMayhem
             gameMain = GameMain.getInstance();
 
             // set up buttons
-            UIButton addScientist = new UIButton(gameMain.Content);
-            addScientist.text = "New Scientist";
+            UIButton addScientist = new UIButton("New Scientist", Color.Black );
             addScientist.y = 600 - addScientist.height;
             addScientist.onClickAction(addNewScientist);
             addToGUI(addScientist);
 
-            UIButton addwall = new UIButton(gameMain.Content);
-            //addwall.text = "Add Wall";
+            UIButton addwall = new UIButton();
+            addwall.text = "M: Wall";
             addwall.x = 0;
             addwall.y = 540;
             addToGUI(addwall);
@@ -50,6 +50,12 @@ namespace LabMayhem
             wel_txt.x = 50;
             wel_txt.y = 50;
             addToGUI(wel_txt);
+
+            TextField mselc_txt = new TextField();
+            mselc_txt.text = "Selected Material:";
+            mselc_txt.x = gameMain.gameWidth - 300;
+            mselc_txt.y = 5;
+            addToGUI(mselc_txt);
         }
 
         private void addToGUI(DisplayObject dob)

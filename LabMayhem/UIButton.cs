@@ -16,16 +16,32 @@ namespace LabMayhem {
         private Texture2D finalTexture;
         private GameMain gameMain;
 
+        private Color backgroundColour = Color.Chocolate;
         private string _text = "";
         public string text { get { return _text; } set { _text = value; setUpTextField(); } }
 
-        public UIButton(ContentManager cloader) {
-            content = cloader;
+        public UIButton() {
+            startUIButton();
+        }
+        public UIButton(string str)
+        {
+            startUIButton();
+            text = str;
+        }
+        public UIButton(string str, Color cc)
+        {
+            backgroundColour = cc;
+            startUIButton();
+            text = str;            
+        }
+        private void startUIButton()
+        {
             gameMain = GameMain.getInstance();
+            content = gameMain.Content;
 
             buttonTexture = new Texture2D(gameMain.GraphicsDevice, 150, 25);
             Color[] data = new Color[150 * 25];
-            for (int i = 0; i < data.Length; ++i) data[i] = Color.Chocolate;
+            for (int i = 0; i < data.Length; ++i) data[i] = backgroundColour;
             buttonTexture.SetData(data);
             finalTexture = buttonTexture;
 
