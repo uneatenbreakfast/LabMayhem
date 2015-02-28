@@ -56,9 +56,11 @@
     <Compile Include="DisplayObject.cs" />
     <Compile Include="FrameRateCounter.cs" />
     <Compile Include="HelperMethods.cs" />
+    <Compile Include="MaterialObject.cs" />
     <Compile Include="Materials.cs" />
     <Compile Include="MouseEventListenerManager.cs" />
     <Compile Include="TextField.cs" />
+    <Compile Include="TileObject.cs" />
     <Compile Include="UIButton.cs" />
     <Compile Include="ImageDisplayObject.cs" />
     <Compile Include="GameMain.cs" />
@@ -136,6 +138,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Images\WallLayouts.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Images\Items.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Images\Pavements.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

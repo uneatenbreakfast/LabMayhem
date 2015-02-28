@@ -13,6 +13,7 @@ namespace LabMayhem
         private static UIManager uiManager;
         private GameMain gameMain;
         private Materials materialManager;
+        private MapManager mapManager;
         private List<DisplayObject> guiDisplayList = new List<DisplayObject>();
 
         
@@ -46,6 +47,7 @@ namespace LabMayhem
         {
             gameMain = GameMain.getInstance();
             materialManager = Materials.getInstance();
+            mapManager = MapManager.getInstance();
 
             // set up buttons
             UIButton addScientist = new UIButton("New Scientist", Color.Black );
@@ -101,9 +103,17 @@ namespace LabMayhem
             positionCursorMaterial();
         }
 
-        private void addToGUI(DisplayObject dob)
+        private void addToGUI(DisplayObject dob, Boolean front=false)
         {
-            guiDisplayList.Add(dob);
+            if (front)
+            {
+                guiDisplayList.Insert(0, dob);
+            }
+            else
+            {
+                guiDisplayList.Add(dob);
+            }
+           
         }
         public List<DisplayObject> getGUIDisplayList()
         {
@@ -134,11 +144,16 @@ namespace LabMayhem
             }
             else
             {
-                cursorSelectorTexture = new UIHoverTexture(materialManager.getMaterial(selectedMaterial));
-                addToGUI(cursorSelectorTexture);
-            }
-
-           
+                cursorSelectorTexture = new UIHoverTexture(selectedMaterial, materialManager.getMaterial(selectedMaterial));
+                cursorSelectorTexture.onClickAction(placeMaterial);
+                addToGUI(cursorSelectorTexture, true);
+            } 
+        }
+        private void placeMaterial(Object sender, EventArgs e)
+        {
+            int cx = Mouse.GetState().X / GameMain.gridSize;
+            int cy = Mouse.GetState().Y / GameMain.gridSize;
+            mapManager.buildMaterialAt(cursorSelectorTexture.materialKey, cx, cy);
         }
         private void addNewScientist(Object sender, EventArgs e)
         {

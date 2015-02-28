@@ -8,10 +8,12 @@ namespace LabMayhem
 {
     public class Materials
     {
-        public const int NONE = 0;
-        public const int WALL = 1;
+        public const int NONE       = 0;
+        public const int WALL       = 1;
+        public const int CHEST      = 2;
+        public const int PAVEMENT   = 3;
 
-        private Dictionary<int, Texture2D> materialLib = new Dictionary<int, Texture2D>();
+        private Dictionary<int, MaterialObject> materialLib = new Dictionary<int, MaterialObject>();
 
         //
         private GameMain gameMain;
@@ -20,8 +22,9 @@ namespace LabMayhem
         {
             gameMain = GameMain.getInstance();
 
-            addMaterial(WALL, "Images/WallLayouts", 0, 0);
-
+            addMaterial(WALL, "Images/WallLayouts", 0, 0, 2);
+            addMaterial(CHEST, "Images/Items", 0, 0, 1);
+            addMaterial(PAVEMENT, "Images/Pavements", 0, 0, 0);
         }
         public static Materials getInstance()
         {
@@ -31,17 +34,37 @@ namespace LabMayhem
             }
             return thisSingle;
         }
-        private void addMaterial(int materialKey, string srcstr, int xx, int yy)
+       
+        private void addMaterial(int materialKey, string srcstr, int xx, int yy, int floorLevel)
         {
-            Texture2D materialTexture = gameMain.Content.Load<Texture2D>(srcstr);
+            /* xx/yy tells where on the layout to rip the texture2d out of - assuming size is gridSize
+             * 
+             * floorLevel   - 0 : ground pavement - can have things on top of them
+             *              - 1 : objects - eg tables/chairs
+             *              - 2 : walls - nothing else can go on that tile cell
+             *              - 3 : underground cables?
+             *              - 4 : overhanging lights?
+             * 
+             * 
+             */ 
 
-
-            materialLib.Add(materialKey, materialTexture);
+            MaterialObject mb = new MaterialObject();
+            mb.key = materialKey;
+            mb.texture = gameMain.Content.Load<Texture2D>(srcstr);
+            mb.floorLevel = floorLevel;
+            
+            materialLib.Add(materialKey, mb);
         }
         public Texture2D getMaterial(int materialKey)
         {
-            Texture2D tx;
+            MaterialObject tx;
             materialLib.TryGetValue(materialKey, out tx);
+            return tx.texture;
+        }
+        public MaterialObject getMaterialObject(int key)
+        {
+            MaterialObject tx;
+            materialLib.TryGetValue(key, out tx);
             return tx;
         }
     }

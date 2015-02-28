@@ -10,13 +10,20 @@ namespace LabMayhem
     class UIHoverTexture : ImageDisplayObject
     {
         private Texture2D thisTx;
-        public UIHoverTexture(Texture2D tex)
+        public int materialKey;
+
+        public UIHoverTexture(int mkey, Texture2D tex)
         {
+            materialKey = mkey;
             thisTx = tex;
             width = thisTx.Width;
             height = thisTx.Height;
         }
 
+        public void onClickAction(EventHandler cusEvent)
+        {
+            MouseEventListenerManager.getInstance().addClickListener(this, cusEvent);
+        }
 
         //
         public override Texture2D getTexture()

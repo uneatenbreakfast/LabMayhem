@@ -108,8 +108,22 @@ namespace LabMayhem
             // draw grid
             drawGrid();
 
-            // display objects
-            foreach (ImageDisplayObject dis in displayList)
+
+            // get all the map tiles
+            List<ImageDisplayObject>[] bgtiles = mapManager.getMapTiles();
+            List<ImageDisplayObject> pavementTiles  = bgtiles[0];
+            List<ImageDisplayObject> map_objects    = bgtiles[1];
+            List<ImageDisplayObject> wallstiles     = bgtiles[2];
+
+            //draw ground and walls
+            foreach (ImageDisplayObject dis in pavementTiles.Concat(wallstiles))
+            {
+                spriteBatch.Draw(dis.getTexture(), dis.getDrawRectangle(), Color.White);
+            }
+
+            // display objects - merge the map objects with the characters
+            var disobjlist = displayList.Concat(map_objects);
+            foreach (ImageDisplayObject dis in disobjlist)
             {
                 spriteBatch.Draw(dis.getTexture(), dis.getDrawRectangle(), Color.White);
             }
