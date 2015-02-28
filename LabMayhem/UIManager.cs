@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +12,18 @@ namespace LabMayhem
     {
         private static UIManager uiManager;
         private GameMain gameMain;
+        private Materials materialManager;
         private List<DisplayObject> guiDisplayList = new List<DisplayObject>();
 
         
         private TextField fps_txt;
         private TextField mselc_txt;
 
+        private UIHoverTexture cursorSelectorTexture;
+
         //
         public int selectedMaterial = Materials.NONE;
+
 
         public UIManager()
         {
@@ -39,7 +45,7 @@ namespace LabMayhem
         public void init()
         {
             gameMain = GameMain.getInstance();
-            
+            materialManager = Materials.getInstance();
 
             // set up buttons
             UIButton addScientist = new UIButton("New Scientist", Color.Black );
@@ -60,7 +66,7 @@ namespace LabMayhem
                 UIButton btn = new UIButton();
                 btn.text = "M: "+e.Value;
                 btn.x = 0;
-                btn.y = gameMain.gameHeight - (30 * btnNum)-30;
+                btn.y = GameMain.gameHeight - (30 * btnNum)-30;
                 btn.val = e.Key;
                 btn.onClickAction(material_select);
                 addToGUI(btn);
@@ -78,19 +84,21 @@ namespace LabMayhem
 
             mselc_txt = new TextField();
             mselc_txt.text = "Selected Material:"+selectedMaterial;
-            mselc_txt.x = gameMain.gameWidth - mselc_txt.getWidth();
+            mselc_txt.x = GameMain.gameWidth - mselc_txt.getWidth();
             mselc_txt.y = 20;
             addToGUI(mselc_txt);
 
             fps_txt = new TextField();
-            fps_txt.x = gameMain.gameWidth - fps_txt.getWidth();
+            fps_txt.x = GameMain.gameWidth - fps_txt.getWidth();
             fps_txt.y = 5;
             addToGUI(fps_txt);
         }
         public void update(GameTime gameTime)
         {
             fps_txt.text = string.Format("FPS: {0}", FrameRateCounter.getFPS() );
-            fps_txt.x = gameMain.gameWidth - fps_txt.getWidth(); 
+            fps_txt.x = GameMain.gameWidth - fps_txt.getWidth();
+
+            positionCursorMaterial();
         }
 
         private void addToGUI(DisplayObject dob)
@@ -99,9 +107,17 @@ namespace LabMayhem
         }
         public List<DisplayObject> getGUIDisplayList()
         {
-            return guiDisplayList;
+            return guiDisplayList.ToList();
         }
 
+        private void positionCursorMaterial()
+        {
+            if (cursorSelectorTexture != null)
+            {
+                cursorSelectorTexture.x = (int)(Mouse.GetState().X / GameMain.gridSize) * GameMain.gridSize;
+                cursorSelectorTexture.y = (int)(Mouse.GetState().Y / GameMain.gridSize) * GameMain.gridSize;
+            }
+        }
 
         // click event listner functions =========
         private void material_select(Object sender, EventArgs e)
@@ -110,6 +126,19 @@ namespace LabMayhem
 
             selectedMaterial = mc.val; ;
             mselc_txt.text = "Selected Material:"+selectedMaterial;
+
+            if (selectedMaterial == Materials.NONE)
+            {
+                guiDisplayList.Remove(cursorSelectorTexture);
+                cursorSelectorTexture = null;
+            }
+            else
+            {
+                cursorSelectorTexture = new UIHoverTexture(materialManager.getMaterial(selectedMaterial));
+                addToGUI(cursorSelectorTexture);
+            }
+
+           
         }
         private void addNewScientist(Object sender, EventArgs e)
         {

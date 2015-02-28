@@ -19,11 +19,13 @@ namespace LabMayhem
         MapManager mapManager;
         MouseEventListenerManager mouseManager;
         UIManager uiManager;
+        Materials materialsManager;
         List<ImageDisplayObject> displayList = new List<ImageDisplayObject>();
         List<ImageDisplayObject> tempDisplayList = new List<ImageDisplayObject>();
 
-        public int gameWidth;
-        public int gameHeight;
+        public static int gameWidth   = 1000;
+        public static int gameHeight  = 600;
+        public static int gridSize    = 32;
 
         public GameMain()  : base()
         {
@@ -31,8 +33,8 @@ namespace LabMayhem
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            gameWidth = graphics.PreferredBackBufferWidth = 1000;  // set this value to the desired width of your window
-            gameHeight = graphics.PreferredBackBufferHeight = 600;   // set this value to the desired height of your window
+            graphics.PreferredBackBufferWidth = gameWidth;  // set this value to the desired width of your window
+            graphics.PreferredBackBufferHeight = gameHeight;   // set this value to the desired height of your window
 
             this.IsMouseVisible = true;
 
@@ -50,6 +52,7 @@ namespace LabMayhem
             mapManager = MapManager.getInstance();
             mouseManager = MouseEventListenerManager.getInstance();
             uiManager = UIManager.getInstance();
+            materialsManager = Materials.getInstance();
 
             // Set up GUI
             uiManager.init();
@@ -147,13 +150,14 @@ namespace LabMayhem
 
             int width = gameWidth;
             int height = gameHeight;
-            
-            for (int i = 0; i < width; i += 50)
+            int gridSize = 32;
+
+            for (int i = 0; i < width; i += gridSize)
             {
                 spriteBatch.Draw(pixel, new Rectangle(i,0,1, height), Color.AliceBlue);
             }
 
-            for (int i = 0; i < height; i += 50)
+            for (int i = 0; i < height; i += gridSize)
             {
                 spriteBatch.Draw(pixel, new Rectangle(0, i, width, 1), Color.Gray);
             }
