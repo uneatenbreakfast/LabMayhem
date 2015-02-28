@@ -13,6 +13,7 @@ namespace LabMayhem
         private static MouseManager mouseManager;
 
         public Dictionary<ImageDisplayObject, EventHandler> eventHandlerDic = new Dictionary<ImageDisplayObject,EventHandler>();
+        private List<ImageDisplayObject> buttons = new List<ImageDisplayObject>();
         private BackgroundWorker bw;
 
         private MouseState lastMouseState;
@@ -38,6 +39,7 @@ namespace LabMayhem
         public void addClickListener(ImageDisplayObject ob, EventHandler funcdelegate)
         {
             eventHandlerDic.Add(ob, funcdelegate);
+            buttons.Add(ob);
 
             if (bw == null)
             {
@@ -50,15 +52,23 @@ namespace LabMayhem
                     {
                         var ms = Mouse.GetState();
                         Point msPoint = new Point(ms.X, ms.Y);
-                        Rectangle rc = new Rectangle((int)ob.x, (int)ob.y, ob.width, ob.height);
 
-                        if (lastMouseState.LeftButton == ButtonState.Released && ms.LeftButton == ButtonState.Pressed && rc.Contains(msPoint))
+                        foreach (ImageDisplayObject btn in buttons.ToList())
                         {
-                            
-                            EventHandler ev; 
-                            if (eventHandlerDic.TryGetValue(ob, out ev))
+                            if (btn == null)
                             {
-                                ev(this, null);
+                                continue;
+                            }
+                            Rectangle rc = new Rectangle((int) btn.x, (int) btn.y, btn.width, btn.height);
+
+                            if (lastMouseState.LeftButton == ButtonState.Released && ms.LeftButton == ButtonState.Pressed && rc.Contains(msPoint))
+                            {
+
+                                EventHandler ev;
+                                if (eventHandlerDic.TryGetValue(btn, out ev))
+                                {
+                                    ev(btn, null);
+                                }
                             }
                         }
                         lastMouseState = ms;

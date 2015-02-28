@@ -19,6 +19,7 @@ namespace LabMayhem {
         private Color backgroundColour = Color.Chocolate;
         private string _text = "";
         public string text { get { return _text; } set { _text = value; setUpTextField(); } }
+        public int val;
 
         public UIButton() {
             startUIButton();

@@ -14,6 +14,7 @@ namespace LabMayhem
 
         
         private TextField fps_txt;
+        private TextField mselc_txt;
 
         //
         public int selectedMaterial = Materials.NONE;
@@ -46,19 +47,36 @@ namespace LabMayhem
             addScientist.onClickAction(addNewScientist);
             addToGUI(addScientist);
 
-            UIButton addwall = new UIButton();
-            addwall.text = "M: Wall";
-            addwall.x = 0;
-            addwall.y = 540;
-            addToGUI(addwall);
+            Dictionary<int, string> mtrls = new Dictionary<int, string>();
+            mtrls.Add( Materials.NONE, "None");
+            mtrls.Add( Materials.WALL, "Wall");
+            mtrls.Add( 2, "Chair");
+            mtrls.Add( 3, "Pavement");
 
+            int btnNum = 1;
+            foreach (KeyValuePair<int, string> e in mtrls)
+            {
+                // do something with entry.Value or entry.Key
+                UIButton btn = new UIButton();
+                btn.text = "M: "+e.Value;
+                btn.x = 0;
+                btn.y = gameMain.gameHeight - (30 * btnNum)-30;
+                btn.val = e.Key;
+                btn.onClickAction(material_select);
+                addToGUI(btn);
+
+                btnNum++;
+            }
+          
+
+            // Texts
             TextField wel_txt = new TextField();
             wel_txt.text = "I've been expecting you, Mr Kuan.";
             wel_txt.x = 50;
             wel_txt.y = 50;
             addToGUI(wel_txt);
 
-            TextField mselc_txt = new TextField();
+            mselc_txt = new TextField();
             mselc_txt.text = "Selected Material:"+selectedMaterial;
             mselc_txt.x = gameMain.gameWidth - mselc_txt.getWidth();
             mselc_txt.y = 20;
@@ -84,11 +102,20 @@ namespace LabMayhem
             return guiDisplayList;
         }
 
+
+        // click event listner functions =========
+        private void material_select(Object sender, EventArgs e)
+        {
+            UIButton mc = (UIButton)sender;
+
+            selectedMaterial = mc.val; ;
+            mselc_txt.text = "Selected Material:"+selectedMaterial;
+        }
         private void addNewScientist(Object sender, EventArgs e)
         {
 
              Random r = new Random();
-             for (int i = 0; i < 100; i++)
+             for (int i = 0; i < 1; i++)
              {
                  int nx = r.Next(1000);
                  int ny = r.Next(600);

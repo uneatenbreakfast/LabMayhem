@@ -10,6 +10,7 @@ namespace LabMayhem
     class TextField : DisplayObject
     {
 
+        public int val;
         public string text = "";
         public Color colour;
         private GameMain gameMain;
