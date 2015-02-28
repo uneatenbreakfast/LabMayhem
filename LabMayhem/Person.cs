@@ -9,7 +9,7 @@ using System.Text;
 namespace LabMayhem
 {
    
-    class Person : DisplayObject
+    class Person : ImageDisplayObject
     {
         private ContentManager content;
         private Texture2D characterTexture;
@@ -45,7 +45,7 @@ namespace LabMayhem
         private float spriteIntervalTimer;
 
         //
-        public Person(ContentManager cloader)
+        public Person(ContentManager cloader) :base ()
         {
             content = cloader;
             characterTexture = content.Load<Texture2D>("Images/girlscientist");

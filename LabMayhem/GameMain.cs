@@ -19,11 +19,11 @@ namespace LabMayhem
         MapManager mapManager;
         MouseManager mouseManager;
         UIManager uiManager;
-        List<DisplayObject> displayList = new List<DisplayObject>();
-        List<DisplayObject> tempDisplayList = new List<DisplayObject>();
+        List<ImageDisplayObject> displayList = new List<ImageDisplayObject>();
+        List<ImageDisplayObject> tempDisplayList = new List<ImageDisplayObject>();
 
-        private SpriteFont oswald;
-        private SpriteFont featureditem;
+        public int gameWidth;
+        public int gameHeight;
 
         public GameMain()  : base()
         {
@@ -31,8 +31,8 @@ namespace LabMayhem
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            graphics.PreferredBackBufferWidth = 1000;  // set this value to the desired width of your window
-            graphics.PreferredBackBufferHeight = 600;   // set this value to the desired height of your window
+            gameWidth = graphics.PreferredBackBufferWidth = 1000;  // set this value to the desired width of your window
+            gameHeight = graphics.PreferredBackBufferHeight = 600;   // set this value to the desired height of your window
 
             this.IsMouseVisible = true;
         }
@@ -71,8 +71,6 @@ namespace LabMayhem
         protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            oswald = Content.Load<SpriteFont>("Fonts/oswald-20");
-            featureditem = Content.Load<SpriteFont>("Fonts/featureditem-20");
         }
 
 
@@ -90,13 +88,13 @@ namespace LabMayhem
             displayList.AddRange(tempDisplayList);
             tempDisplayList.Clear();
 
-            foreach (DisplayObject dis in displayList)
+            foreach (ImageDisplayObject dis in displayList)
             {
                 dis.update(gameTime);
             }
 
 
-            displayList = (from d in displayList orderby d.y select d).ToList<DisplayObject>();
+            displayList = (from d in displayList orderby d.y select d).ToList<ImageDisplayObject>();
 
             base.Update(gameTime);
         }
@@ -105,28 +103,64 @@ namespace LabMayhem
         {
             GraphicsDevice.Clear(Color.NavajoWhite);
             spriteBatch.Begin();
-            //
-            foreach (DisplayObject dis in displayList)
+
+            // draw grid
+            drawGrid();
+
+            // display objects
+            foreach (ImageDisplayObject dis in displayList)
             {
-                spriteBatch.Draw(dis.getTexture(), dis.getDrawRectangle(), Color.AliceBlue);
+                spriteBatch.Draw(dis.getTexture(), dis.getDrawRectangle(), Color.White);
             }
-            //
-            spriteBatch.DrawString(oswald, "Hello world", new Vector2(200, 200), Color.Black);
 
 
-            spriteBatch.DrawString(featureditem, "Hello Flash MAN", new Vector2(300, 200), Color.Black);
+
+
+            // GUI - display and text
+            foreach (DisplayObject dsb in uiManager.getGUIDisplayList() )
+            {
+                if (dsb.displayObjectType == DisplayObject.DisplayObjectType.TEXT)
+                {
+                    // is a textfield
+                    TextField dtxt = (TextField)dsb;
+                    spriteBatch.DrawString(dtxt.getFont(), dtxt.text, new Vector2(dtxt.x, dtxt.y), dtxt.colour);
+                }
+                else
+                {
+                    // is an image with texture2D
+                    ImageDisplayObject idsb = (ImageDisplayObject)dsb;
+                    spriteBatch.Draw(idsb.getTexture(), idsb.getDrawRectangle(), Color.White);
+                }
+            }
+            
             //
+
             spriteBatch.End();
-
-
- 
-
 
             base.Draw(gameTime);
         }
-        // Our functions
 
-        public void addToStage(DisplayObject ds)
+      
+        // Our functions
+        private void drawGrid()
+        {
+            Texture2D pixel = new Texture2D(GraphicsDevice, 1,1);
+            pixel.SetData(new Color[] { Color.Gray * 0.1f });
+
+            int width = gameWidth;
+            int height = gameHeight;
+            
+            for (int i = 0; i < width; i += 50)
+            {
+                spriteBatch.Draw(pixel, new Rectangle(i,0,1, height), Color.AliceBlue);
+            }
+
+            for (int i = 0; i < height; i += 50)
+            {
+                spriteBatch.Draw(pixel, new Rectangle(0, i, width, 1), Color.Gray);
+            }
+        }
+        public void addToStage(ImageDisplayObject ds)
         {
             // a temporary list is needed so it prevents mid displaylist loop new insertion errors
             tempDisplayList.Add(ds);

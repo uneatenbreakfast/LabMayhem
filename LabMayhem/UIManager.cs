@@ -9,6 +9,7 @@ namespace LabMayhem
     {
         private static UIManager uiManager;
         private GameMain gameMain;
+        private List<DisplayObject> guiDisplayList = new List<DisplayObject>();
 
         public UIManager()
         {
@@ -36,12 +37,28 @@ namespace LabMayhem
             addScientist.text = "New Scientist";
             addScientist.y = 600 - addScientist.height;
             addScientist.onClickAction(addNewScientist);
-            gameMain.addToStage(addScientist);
+            addToGUI(addScientist);
 
             UIButton addwall = new UIButton(gameMain.Content);
-            addwall.x = addwall.width;
-            addwall.y = 600 - addwall.height;
-            gameMain.addToStage(addwall);
+            //addwall.text = "Add Wall";
+            addwall.x = 0;
+            addwall.y = 540;
+            addToGUI(addwall);
+
+            TextField wel_txt = new TextField();
+            wel_txt.text = "I've been expecting you, Mr Kuan.";
+            wel_txt.x = 50;
+            wel_txt.y = 50;
+            addToGUI(wel_txt);
+        }
+
+        private void addToGUI(DisplayObject dob)
+        {
+            guiDisplayList.Add(dob);
+        }
+        public List<DisplayObject> getGUIDisplayList()
+        {
+            return guiDisplayList;
         }
 
         private void addNewScientist(Object sender, EventArgs e)

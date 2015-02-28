@@ -9,22 +9,25 @@ using System.Linq;
 using System.Text;
 
 namespace LabMayhem {
-    class UIButton : DisplayObject {
+    class UIButton : ImageDisplayObject {
 
         private ContentManager content;
         private Texture2D buttonTexture;
         private Texture2D finalTexture;
         private GameMain gameMain;
 
-        private SpriteFont fontFeaturedItem;
         private string _text = "";
         public string text { get { return _text; } set { _text = value; setUpTextField(); } }
 
         public UIButton(ContentManager cloader) {
             content = cloader;
-            finalTexture = buttonTexture = content.Load<Texture2D>("Images/button");
-            fontFeaturedItem = content.Load<SpriteFont>("Fonts/featureditem-20");
             gameMain = GameMain.getInstance();
+
+            buttonTexture = new Texture2D(gameMain.GraphicsDevice, 150, 25);
+            Color[] data = new Color[150 * 25];
+            for (int i = 0; i < data.Length; ++i) data[i] = Color.Chocolate;
+            buttonTexture.SetData(data);
+            finalTexture = buttonTexture;
 
             width = buttonTexture.Width;
             height = buttonTexture.Height;
@@ -42,7 +45,8 @@ namespace LabMayhem {
             gameMain.spriteBatch.Begin();
 
             gameMain.spriteBatch.Draw(buttonTexture, Vector2.Zero, new Rectangle(0,0, buttonTexture.Width, buttonTexture.Height), Color.White);
-            gameMain.spriteBatch.DrawString(fontFeaturedItem, _text, new Vector2(buttonTexture.Height/2,20), Color.Black);
+
+            gameMain.spriteBatch.DrawString(new TextField().getFont(), _text, new Vector2(5,5), Color.White);
 
             gameMain.spriteBatch.End();
             gameMain.GraphicsDevice.SetRenderTarget(null);

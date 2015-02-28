@@ -12,7 +12,7 @@ namespace LabMayhem
     {
         private static MouseManager mouseManager;
 
-        public Dictionary<DisplayObject, EventHandler> eventHandlerDic = new Dictionary<DisplayObject,EventHandler>();
+        public Dictionary<ImageDisplayObject, EventHandler> eventHandlerDic = new Dictionary<ImageDisplayObject,EventHandler>();
         private BackgroundWorker bw;
 
         private MouseState lastMouseState;
@@ -35,7 +35,7 @@ namespace LabMayhem
             return mouseManager;
         }
 
-        public void addClickListener(DisplayObject ob, EventHandler funcdelegate)
+        public void addClickListener(ImageDisplayObject ob, EventHandler funcdelegate)
         {
             eventHandlerDic.Add(ob, funcdelegate);
 

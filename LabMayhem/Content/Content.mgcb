@@ -58,3 +58,9 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/featureditem-20.spritefont
 
+#begin Fonts/featureditem-14.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts/featureditem-14.spritefont
+
