@@ -35,6 +35,8 @@ namespace LabMayhem
             gameHeight = graphics.PreferredBackBufferHeight = 600;   // set this value to the desired height of your window
 
             this.IsMouseVisible = true;
+
+            Components.Add(new FrameRateCounter(this));
         }
         public static GameMain getInstance() // singleton - To refer back to GameMain
         {
@@ -53,19 +55,14 @@ namespace LabMayhem
             uiManager.init();
 
             // Add characters
-            Random r = new Random();
-            for (int i = 0; i < 1; i++)
-            {
-                int nx = r.Next(1000);
-                int ny = r.Next(600);
 
-                Person emily = new Person(this.Content);
-                emily.x = nx;
-                emily.y = ny;
-                emily.moveTo(100, 300);
+            Person emily = new Person(this.Content);
+            emily.x = gameWidth/2;
+            emily.y = gameHeight/2;
+            emily.moveTo(100, 300);
 
-                addToStage(emily);
-            }
+            addToStage(emily);
+            
         }
 
         protected override void LoadContent() {
@@ -84,6 +81,7 @@ namespace LabMayhem
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            uiManager.update(gameTime);
             // add the new display objects onto the real displaylist
             displayList.AddRange(tempDisplayList);
             tempDisplayList.Clear();
@@ -134,7 +132,7 @@ namespace LabMayhem
             }
             
             //
-
+            
             spriteBatch.End();
 
             base.Draw(gameTime);

@@ -37,6 +37,7 @@ namespace LabMayhem
         private AnimationState animationNum = AnimationState.IDLE_FRONT;
         private int procrastinationInterval = 0;
 
+        private Texture2D[,] textureStorage;
         private int spriteHeight = 48;
         private int spriteWidth = 48;
         private int currentFrame = 0;
@@ -51,6 +52,9 @@ namespace LabMayhem
             characterTexture = content.Load<Texture2D>("Images/girlscientist");
             gameMain = GameMain.getInstance();
 
+            int col = (int)characterTexture.Width / spriteWidth;
+            int row = (int)characterTexture.Height/spriteHeight;
+            textureStorage = new Texture2D[col, row];
             width = spriteWidth;
             height = spriteHeight;
         }
@@ -74,8 +78,18 @@ namespace LabMayhem
         // helper functions
         private Texture2D getImagePart(Texture2D originalTexture)
         {
-            Rectangle srcRec = new Rectangle(currentFrame * spriteWidth, (int) animationNum * spriteHeight, spriteWidth, spriteHeight);
-            return HelperMethods.cropImage(originalTexture, srcRec);
+            Texture2D aniFrame;
+            if (textureStorage[(int) animationNum, currentFrame] == null)
+            {
+                Rectangle srcRec = new Rectangle(currentFrame * spriteWidth, (int)animationNum * spriteHeight, spriteWidth, spriteHeight);
+                textureStorage[(int)animationNum, currentFrame] = aniFrame = HelperMethods.cropImage(originalTexture, srcRec);
+            }
+            else
+            {
+                aniFrame = textureStorage[(int)animationNum, currentFrame];
+            }
+            
+            return aniFrame;
         }
 
         private void processAnimation(GameTime gameTime)

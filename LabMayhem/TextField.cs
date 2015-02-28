@@ -16,6 +16,7 @@ namespace LabMayhem
 
         private SpriteFont activeFont;
         private SpriteFont featureditem14;
+
         public TextField()
         {
             displayObjectType = DisplayObjectType.TEXT;
@@ -30,6 +31,12 @@ namespace LabMayhem
         public SpriteFont getFont()
         {
             return activeFont;
+        }
+
+        public int getWidth()
+        {
+            width = (int)activeFont.MeasureString(text).X; 
+            return width;
         }
     }
 }
