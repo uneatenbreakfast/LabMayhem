@@ -151,9 +151,13 @@ namespace LabMayhem
         }
         private void placeMaterial(Object sender, EventArgs e)
         {
-            int cx = Mouse.GetState().X / GameMain.gridSize;
-            int cy = Mouse.GetState().Y / GameMain.gridSize;
-            mapManager.buildMaterialAt(cursorSelectorTexture.materialKey, cx, cy);
+            if (cursorSelectorTexture != null)
+            {
+                int cx = Mouse.GetState().X / GameMain.gridSize;
+                int cy = Mouse.GetState().Y / GameMain.gridSize;
+                mapManager.buildMaterialAt(cursorSelectorTexture.materialKey, cx, cy);
+            }
+           
         }
         private void addNewScientist(Object sender, EventArgs e)
         {
