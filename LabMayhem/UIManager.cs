@@ -14,6 +14,8 @@ namespace LabMayhem
         private GameMain gameMain;
         private Materials materialManager;
         private MapManager mapManager;
+        private TaskManager taskManager;
+
         private List<DisplayObject> guiDisplayList = new List<DisplayObject>();
 
         
@@ -48,6 +50,7 @@ namespace LabMayhem
             gameMain = GameMain.getInstance();
             materialManager = Materials.getInstance();
             mapManager = MapManager.getInstance();
+            taskManager = TaskManager.getInstance();
 
             // set up buttons
             UIButton addScientist = new UIButton("New Scientist", Color.Black );
@@ -149,7 +152,7 @@ namespace LabMayhem
             }
             else
             {
-                cursorSelectorTexture = new UIHoverTexture(selectedMaterial, materialManager.getMaterial(selectedMaterial));
+                cursorSelectorTexture = new UIHoverTexture(selectedMaterial, materialManager.getMaterialTexture(selectedMaterial));
                 cursorSelectorTexture.onClickAction(placeMaterial);
                 addToGUI(cursorSelectorTexture, true);
             } 
@@ -160,7 +163,11 @@ namespace LabMayhem
             {
                 int cx = Mouse.GetState().X / GameMain.gridSize;
                 int cy = Mouse.GetState().Y / GameMain.gridSize;
-                mapManager.buildMaterialAt(cursorSelectorTexture.materialKey, cx, cy);
+                Boolean canBuildThere = mapManager.buildMaterialAt(cursorSelectorTexture.materialKey, cx, cy);
+                if (canBuildThere)
+                {
+                    taskManager.addBuildTask(cursorSelectorTexture.materialKey, cx, cy);
+                }
             }
            
         }
@@ -173,7 +180,8 @@ namespace LabMayhem
                  int nx = r.Next(1000);
                  int ny = r.Next(600);
 
-                 Person emily = new Person("Images/girlscientist");
+
+                 Scientist emily = new Scientist("Images/girlscientist");
                  emily.x = nx;
                  emily.y = ny;
                  emily.moveTo(100, 300);
@@ -192,15 +200,6 @@ namespace LabMayhem
             wally.moveTo(300, 300);
 
             gameMain.addToStage(wally);
-            gameMain.addToStage(wally);
-            gameMain.addToStage(wally);
-            gameMain.addToStage(wally);
-            gameMain.addToStage(wally);
-            gameMain.addToStage(wally);
-            gameMain.addToStage(wally);
-            gameMain.addToStage(wally);
-
-
         }
 
     }

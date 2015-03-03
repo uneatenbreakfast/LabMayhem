@@ -59,6 +59,9 @@
     <Compile Include="MaterialObject.cs" />
     <Compile Include="Materials.cs" />
     <Compile Include="MouseEventListenerManager.cs" />
+    <Compile Include="Scientist.cs" />
+    <Compile Include="Task.cs" />
+    <Compile Include="TaskManager.cs" />
     <Compile Include="TextField.cs" />
     <Compile Include="TileObject.cs" />
     <Compile Include="UIButton.cs" />

@@ -32,8 +32,9 @@ namespace LabMayhem
             return mapManager;
         }
 
-        public void buildMaterialAt(int materialKey, int cx, int cy)
+        public Boolean buildMaterialAt(int materialKey, int cx, int cy)
         {
+            Boolean canBuildThere = false;
             if (map[cy, cx] == null)
             {
                 map[cy, cx] = new MapObject();
@@ -41,15 +42,16 @@ namespace LabMayhem
             MapObject mb = map[cy, cx];
 
             // check if it can be placed there
-            if (mb.floorLevel[2] == null)
+            if (mb.floorLevelObjects[2] == null)
             {
                 // no wall on this cell therefore is safe to place anything
                 MaterialObject mob = materialManager.getMaterialObject(materialKey);
 
                 int floorLvl = mob.floorLevel;
-                if (mb.floorLevel[floorLvl] == null)
+                if (mb.floorLevelObjects[floorLvl] == null)
                 {
-                    mb.floorLevel[floorLvl] = new TileObject(cx, cy, mob);
+                    mb.floorLevelObjects[floorLvl] = new TileObject(cx, cy, mob);
+                    canBuildThere = true;
                 }
                 else
                 {
@@ -60,6 +62,8 @@ namespace LabMayhem
             {
                 // wall is in the way
             }
+
+            return canBuildThere;
         }
         public List<ImageDisplayObject>[] getMapTiles()
         {
@@ -75,11 +79,11 @@ namespace LabMayhem
                     if (map[iy, ix] != null)
                     {
                         MapObject mo = map[iy, ix];
-                        for (int p = 0; p < mo.floorLevel.Length; p++)
+                        for (int p = 0; p < mo.floorLevelObjects.Length; p++)
                         {
-                            if (mo.floorLevel[p] != null)
+                            if (mo.floorLevelObjects[p] != null)
                             {
-                                mm[p].Add((ImageDisplayObject) mo.floorLevel[p]);
+                                mm[p].Add((ImageDisplayObject) mo.floorLevelObjects[p]);
                             }
                         }
 
@@ -88,6 +92,10 @@ namespace LabMayhem
             }
             return mm;
 
+        }
+        public TileObject getTileObjectAt(int x, int y, int floorLevel)
+        {
+            return ((MapObject)map[y, x]).floorLevelObjects[floorLevel];
         }
 
     }

@@ -20,6 +20,8 @@ namespace LabMayhem
         MouseEventListenerManager mouseManager;
         UIManager uiManager;
         Materials materialsManager;
+        TaskManager taskManager;
+
         List<ImageDisplayObject> displayList = new List<ImageDisplayObject>();
         List<ImageDisplayObject> tempDisplayList = new List<ImageDisplayObject>();
 
@@ -31,9 +33,6 @@ namespace LabMayhem
         private List<ImageDisplayObject> pavementTiles;
         private List<ImageDisplayObject> map_objects;
         private List<ImageDisplayObject> wallstiles;
-
-
-
 
         //
 
@@ -63,18 +62,10 @@ namespace LabMayhem
             mouseManager = MouseEventListenerManager.getInstance();
             uiManager = UIManager.getInstance();
             materialsManager = Materials.getInstance();
+            taskManager = TaskManager.getInstance();
 
             // Set up GUI
             uiManager.init();
-
-            // Add characters
-
-            Person emily = new Person("Images/girlscientist");
-            emily.x = gameWidth/2;
-            emily.y = gameHeight/2;
-            emily.moveTo(100, 300);
-
-            addToStage(emily);
         }
 
         protected override void LoadContent() {

@@ -9,7 +9,7 @@ namespace LabMayhem
 {
     public class MapObject
     {
-        public TileObject[] floorLevel = new TileObject[5];
+        public TileObject[] floorLevelObjects = new TileObject[5];
         public MapObject()
         {
 

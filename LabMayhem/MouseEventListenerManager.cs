@@ -59,6 +59,15 @@ namespace LabMayhem
                         var ms = Mouse.GetState();
                         Point msPoint = new Point(ms.X, ms.Y);
 
+                        if (ms.X > GameMain.gameWidth || ms.X < 0)
+                        {
+                            continue;
+                        }
+                        if (ms.Y > GameMain.gameHeight || ms.Y < 0)
+                        {
+                            continue;
+                        }
+
 
                         List<ImageDisplayObject> blist = new List<ImageDisplayObject>();
                         lock (padLock)

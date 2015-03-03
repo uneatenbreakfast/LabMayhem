@@ -13,6 +13,8 @@ namespace LabMayhem
         private int col;
         private int row;
 
+        private float colourDone = 0.5f;
+
         public MaterialObject tileType;
         public TileObject(int column, int rowx, MaterialObject mob)
         {
@@ -43,7 +45,12 @@ namespace LabMayhem
 
         new public Color getColor()
         {
-            return Color.White * 0.5f;
+            return Color.White * colourDone;
+        }
+
+        public void changeColourDone()
+        {
+            colourDone = 1.0f;
         }
     }
 }

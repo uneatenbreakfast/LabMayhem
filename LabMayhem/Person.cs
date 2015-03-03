@@ -15,13 +15,22 @@ namespace LabMayhem
         private Texture2D characterTexture;
         private GameMain gameMain;
 
+        protected TaskManager taskManager;
+        protected Task activeTask;
+
         // character state
         public enum CharacterState
         {
             IDLE,
-            MOVING
+            MOVING,
+            WORKING
         }
         public CharacterState characterState = CharacterState.IDLE;
+
+        public enum CharacterType {
+            WORKER, SCIENTIST
+        }
+        public CharacterType characterType;
         
         private Point moveTarget = new Point(0, 0);
         private float moveSpeed = 2.0f;
@@ -49,6 +58,7 @@ namespace LabMayhem
         public Person(string imgsrc) :base ()
         {
             gameMain = GameMain.getInstance();
+            taskManager = TaskManager.getInstance();
             content = gameMain.Content;
 
             characterTexture = content.Load<Texture2D>(imgsrc);
@@ -107,16 +117,7 @@ namespace LabMayhem
         {
             if (dist() < 2.0)
             {
-                characterState = CharacterState.IDLE;
-                // has reached target location
-                if (AnimationState.MOVE_BACK == animationNum)
-                {
-                   animate(AnimationState.IDLE_BACK);
-                }
-                else
-                {
-                   animate(AnimationState.IDLE_FRONT);
-                }
+                atLocation();
                 return;
             }
 
@@ -155,30 +156,74 @@ namespace LabMayhem
             double d = Math.Sqrt( dx*dx + dy*dy );
             return d;
         }
-
-        private void processNextTask()
+        private void atLocation()
         {
-            if (characterState == CharacterState.IDLE)
-            {
-                if (procrastinationInterval < 0)
-                {
-                    // walk to new area
-                    Random r = new Random();
-                    int tox = r.Next(600);
-                    int toy = r.Next(400);
-                    moveTo(tox, toy);
-                    procrastinationInterval = r.Next(200);
-                    //Console.WriteLine("PROCRASTINATE:" + procrastinationInterval+" tox:"+tox+" | "+toy);
-                }
-                procrastinationInterval--;
+            if (activeTask != null)
+            { // this person has a task to do
+                characterState = CharacterState.WORKING;
+                animate(AnimationState.IDLE_FRONT);
             }
+            else
+            {
+                characterState = CharacterState.IDLE;
+                // has reached target location
+                if (AnimationState.MOVE_BACK == animationNum)
+                {
+                    animate(AnimationState.IDLE_BACK);
+                }
+                else
+                {
+                    animate(AnimationState.IDLE_FRONT);
+                }
+            }
+           
         }
+
+        private void processCurrentTask()
+        {
+            switch (characterState)
+            {
+                case CharacterState.IDLE:
+                    if (procrastinationInterval < 0)
+                    {
+                        nextTaskDecider();
+                    }
+                    procrastinationInterval--;
+                    break;
+                case CharacterState.WORKING:
+                    doWork();
+                    break;
+            }
+           
+        }
+
+        protected virtual void nextTaskDecider()
+        {
+            wander();
+        }
+
+        protected virtual void doWork()
+        {
+            Console.WriteLine("DO WORK - Override this");
+        }
+
+        protected void wander()
+        {
+            // walk to new area
+            Random r = new Random();
+            int tox = r.Next(600);
+            int toy = r.Next(400);
+            moveTo(tox, toy);
+            procrastinationInterval = r.Next(200);
+            //Console.WriteLine("PROCRASTINATE:" + procrastinationInterval+" tox:"+tox+" | "+toy);
+        }
+
         // override functions
         public override void update(GameTime gameTime)
         {
             processMovement();
             processAnimation(gameTime);
-            processNextTask();
+            processCurrentTask();
         }
 
         public override Texture2D getTexture()

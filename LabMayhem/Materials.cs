@@ -22,9 +22,9 @@ namespace LabMayhem
         {
             gameMain = GameMain.getInstance();
 
-            addMaterial(WALL, "Images/WallLayouts", 0, 0, 2);
-            addMaterial(CHEST, "Images/Items", 0, 0, 1);
-            addMaterial(PAVEMENT, "Images/Pavements", 0, 0, 0);
+            addMaterial(WALL, "Images/WallLayouts",     0,  0,  2,  5);
+            addMaterial(CHEST, "Images/Items",          0,  0,  1,  1);
+            addMaterial(PAVEMENT, "Images/Pavements",   0,  0,  0,  1);
         }
         public static Materials getInstance()
         {
@@ -35,7 +35,7 @@ namespace LabMayhem
             return thisSingle;
         }
        
-        private void addMaterial(int materialKey, string srcstr, int xx, int yy, int floorLevel)
+        private void addMaterial(int materialKey, string srcstr, int xx, int yy, int floorLevel, int secondsToBuild)
         {
             /* xx/yy tells where on the layout to rip the texture2d out of - assuming size is gridSize
              * 
@@ -52,10 +52,11 @@ namespace LabMayhem
             mb.key = materialKey;
             mb.texture = gameMain.Content.Load<Texture2D>(srcstr);
             mb.floorLevel = floorLevel;
+            mb.secondsToBuild = secondsToBuild;
             
             materialLib.Add(materialKey, mb);
         }
-        public Texture2D getMaterial(int materialKey)
+        public Texture2D getMaterialTexture(int materialKey)
         {
             MaterialObject tx;
             materialLib.TryGetValue(materialKey, out tx);

@@ -11,5 +11,6 @@ namespace LabMayhem
         public int key;
         public Texture2D texture;
         public int floorLevel;
+        public int secondsToBuild;
     }
 }
