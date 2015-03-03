@@ -54,11 +54,13 @@ namespace LabMayhem
                 delegate(object o, DoWorkEventArgs args)
                 {
                     BackgroundWorker b = o as BackgroundWorker;
+                    Point firstClickPoint = new Point(0, 0); 
                     while (true)
                     {
                         var ms = Mouse.GetState();
                         Point msPoint = new Point(ms.X, ms.Y);
 
+                        // listener only works if mouse is within game Window
                         if (ms.X > GameMain.gameWidth || ms.X < 0)
                         {
                             continue;
@@ -67,6 +69,38 @@ namespace LabMayhem
                         {
                             continue;
                         }
+
+                        // only lets the mouse action go through if the use has released mouse click and mouse is still in the same position as the initial click
+                        if (lastMouseState.LeftButton == ButtonState.Released && ms.LeftButton == ButtonState.Pressed)
+                        {
+                            // onPress
+                            firstClickPoint.X = ms.X;
+                            firstClickPoint.Y = ms.Y;
+                            lastMouseState = ms;
+                            continue;
+                        }
+                        else {
+                            if (lastMouseState.LeftButton == ButtonState.Pressed && ms.LeftButton == ButtonState.Released)
+                            {
+                                // on release
+                                if (firstClickPoint.X != ms.X)
+                                {
+                                    lastMouseState = ms;
+                                    continue;
+                                }
+                                if (firstClickPoint.Y != ms.Y)
+                                {
+                                    lastMouseState = ms;
+                                    continue;
+                                }
+                            }
+                            else
+                            {
+                                lastMouseState = ms;
+                                continue;
+                            }
+                        }
+
 
 
                         List<ImageDisplayObject> blist = new List<ImageDisplayObject>();
@@ -83,7 +117,7 @@ namespace LabMayhem
                             }
                             Rectangle rc = new Rectangle((int) btn.x, (int) btn.y, btn.width, btn.height);
 
-                            if (lastMouseState.LeftButton == ButtonState.Released && ms.LeftButton == ButtonState.Pressed && rc.Contains(msPoint))
+                            if (rc.Contains(msPoint))
                             {
 
                                 EventHandler ev;
