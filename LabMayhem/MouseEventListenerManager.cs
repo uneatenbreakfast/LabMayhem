@@ -70,38 +70,43 @@ namespace LabMayhem
                             continue;
                         }
 
-                        // only lets the mouse action go through if the use has released mouse click and mouse is still in the same position as the initial click
+                        //
                         if (lastMouseState.LeftButton == ButtonState.Released && ms.LeftButton == ButtonState.Pressed)
                         {
                             // onPress
                             firstClickPoint.X = ms.X;
                             firstClickPoint.Y = ms.Y;
                             lastMouseState = ms;
+                            // ### Mouse inital Press Code
+
+
                             continue;
                         }
                         else {
                             if (lastMouseState.LeftButton == ButtonState.Pressed && ms.LeftButton == ButtonState.Released)
                             {
                                 // on release
-                                if (firstClickPoint.X != ms.X)
+                                // only lets the mouse action go through if the use has released mouse click and mouse is still in the same position as the initial click
+                                if (firstClickPoint.X != ms.X || firstClickPoint.Y != ms.Y)
                                 {
                                     lastMouseState = ms;
-                                    continue;
-                                }
-                                if (firstClickPoint.Y != ms.Y)
-                                {
-                                    lastMouseState = ms;
+                                    // ### Mouse has been dragged Code
+
+
+
+
                                     continue;
                                 }
                             }
                             else
                             {
+                                // no mouse event detected - user probably just waving mouse around the screen
                                 lastMouseState = ms;
                                 continue;
                             }
                         }
 
-
+                        // ### Mouse Release Code
 
                         List<ImageDisplayObject> blist = new List<ImageDisplayObject>();
                         lock (padLock)
