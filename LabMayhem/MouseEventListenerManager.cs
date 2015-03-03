@@ -13,8 +13,12 @@ namespace LabMayhem
         private static MouseEventListenerManager mouseManager;
         private static object padLock = new object();
 
-        public Dictionary<ImageDisplayObject, EventHandler> eventHandlerDic = new Dictionary<ImageDisplayObject,EventHandler>();
-        private List<ImageDisplayObject> buttons = new List<ImageDisplayObject>();
+        public Dictionary<ImageDisplayObject, EventHandler> eventHandlerDic_onClick = new Dictionary<ImageDisplayObject,EventHandler>();
+        public Dictionary<ImageDisplayObject, EventHandler> eventHandlerDic_onPress = new Dictionary<ImageDisplayObject, EventHandler>();
+        
+        private List<ImageDisplayObject> buttonsOnClicked = new List<ImageDisplayObject>();
+        private List<ImageDisplayObject> elementsOnPressed = new List<ImageDisplayObject>();
+        
         private BackgroundWorker bw;
 
         private MouseState lastMouseState;
@@ -37,16 +41,33 @@ namespace LabMayhem
             return mouseManager;
         }
 
+
         public void addClickListener(ImageDisplayObject ob, EventHandler funcdelegate)
         {
-            eventHandlerDic.Add(ob, funcdelegate);
+            eventHandlerDic_onClick.Add(ob, funcdelegate);
 
             lock (padLock)
             {
-                buttons.Add(ob);
+                buttonsOnClicked.Add(ob);
             }
-           
 
+            initiateWoker();
+
+        }
+        public void addOnPressListener(ImageDisplayObject ob, EventHandler funcdelegate)
+        {
+            eventHandlerDic_onPress.Add(ob, funcdelegate);
+
+            lock (padLock)
+            {
+                elementsOnPressed.Add(ob);
+            }
+
+            initiateWoker();
+        }
+
+        private void initiateWoker()
+        {
             if (bw == null)
             {
                 bw = new BackgroundWorker();
@@ -54,7 +75,7 @@ namespace LabMayhem
                 delegate(object o, DoWorkEventArgs args)
                 {
                     BackgroundWorker b = o as BackgroundWorker;
-                    Point firstClickPoint = new Point(0, 0); 
+                    Point firstClickPoint = new Point(0, 0);
                     while (true)
                     {
                         var ms = Mouse.GetState();
@@ -82,7 +103,8 @@ namespace LabMayhem
 
                             continue;
                         }
-                        else {
+                        else
+                        {
                             if (lastMouseState.LeftButton == ButtonState.Pressed && ms.LeftButton == ButtonState.Released)
                             {
                                 // on release
@@ -102,6 +124,8 @@ namespace LabMayhem
                             {
                                 // no mouse event detected - user probably just waving mouse around the screen
                                 lastMouseState = ms;
+                                // ## mouse rollover
+
                                 continue;
                             }
                         }
@@ -111,22 +135,22 @@ namespace LabMayhem
                         List<ImageDisplayObject> blist = new List<ImageDisplayObject>();
                         lock (padLock)
                         {
-                            blist = buttons.ToList();
+                            blist = buttonsOnClicked.ToList();
                         }
-                        
+
                         foreach (ImageDisplayObject btn in blist)
                         {
                             if (btn == null)
                             {
                                 continue;
                             }
-                            Rectangle rc = new Rectangle((int) btn.x, (int) btn.y, btn.width, btn.height);
+                            Rectangle rc = new Rectangle((int)btn.x, (int)btn.y, btn.width, btn.height);
 
                             if (rc.Contains(msPoint))
                             {
 
                                 EventHandler ev;
-                                if (eventHandlerDic.TryGetValue(btn, out ev))
+                                if (eventHandlerDic_onClick.TryGetValue(btn, out ev))
                                 {
                                     ev(btn, null);
                                 }
@@ -138,5 +162,6 @@ namespace LabMayhem
                 bw.RunWorkerAsync();
             }
         }
+
     }
 }
