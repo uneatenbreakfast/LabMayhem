@@ -1,14 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace LabMayhem
 {
     class Tween
     {
-        private int updatesTilDeletion = 0;
-        private float incrementBy;
+        private TweenManager tweenManager;
+        private int timerNum = 0;
+        private int totalDuration;
+
+        private float startingNumX;
         private int targetNumX;
         private DisplayObject ds;
 
@@ -17,48 +21,57 @@ namespace LabMayhem
             X, Y, WIDTH, HEIGHT, ALPHA, COLOUR
         }
         private PropType propertyType;
+        private Easing.Equations easeType;
 
-        private TweenManager tweenManager;
-
-
-        public Tween(DisplayObject dob, PropType propType, int targetNum, int timeTakenMils)
+        public Tween(DisplayObject dob, PropType propType, int targetNum, int timeTakenMils, Easing.Equations ease)
         {
             tweenManager = TweenManager.getInstance();
             ds = dob;
             propertyType = propType;
             targetNumX = targetNum;
-
-            updatesTilDeletion = timeTakenMils / 60;
+            totalDuration = timeTakenMils;
+            easeType = ease;            
 
             switch(propType){
                 case PropType.X:
-                    incrementBy = (targetNumX - dob.x) / (timeTakenMils / 60);
+                    startingNumX = ds.x;
                     break;
                 case PropType.Y:
-                    incrementBy = (targetNumX - dob.y) / (timeTakenMils / 60);
+                    startingNumX = ds.y;
                     break;
             }
         }
 
         public void update(int millsElapsed)
         {
-            if (updatesTilDeletion <= 0)
+            if (timerNum >= totalDuration)
             {
                 tweenManager.removeTween(this);
             }
             else
             {
+                Easing e = new Easing();
+                MethodInfo mi = e.GetType().GetMethod(easeType.ToString());
+                
+                double n = (double) mi.Invoke(this, new object[] { timerNum, startingNumX, targetNumX, totalDuration });
+
                 switch (propertyType)
                 {
                     case PropType.X:
-                        ds.x += incrementBy;
+                        ds.x = (float) n;
                         break;
                     case PropType.Y:
-                        ds.y += incrementBy;
+                        ds.y = (float) n;
+                        break;
+                    case PropType.WIDTH:
+                        ds.width = (int) n;
+                        break;
+                    case PropType.HEIGHT:
+                        ds.height = (int) n;
                         break;
                 }
             }
-            updatesTilDeletion--;
+            timerNum += 60;
         }
     }
 }

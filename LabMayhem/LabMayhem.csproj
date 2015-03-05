@@ -54,6 +54,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DisplayObject.cs" />
+    <Compile Include="Easing.cs" />
     <Compile Include="FrameRateCounter.cs" />
     <Compile Include="HelperMethods.cs" />
     <Compile Include="MaterialObject.cs" />

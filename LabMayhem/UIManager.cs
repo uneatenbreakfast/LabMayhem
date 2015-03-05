@@ -123,8 +123,7 @@ namespace LabMayhem
             addToGUI(instruc_3);
 
             TweenManager tm = TweenManager.getInstance();
-            tm.To(instruc_3, Tween.PropType.Y, 300, 10000); 
-
+            tm.To(instruc_3, Tween.PropType.Y, 300, 10000, Easing.Equations.QuartEaseIn); 
 
             fps_txt = new TextField();
             fps_txt.x = GameMain.gameWidth - fps_txt.getWidth();
