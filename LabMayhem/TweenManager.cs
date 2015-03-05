@@ -25,9 +25,9 @@ namespace LabMayhem
             return thisTweenManager;
         }
 
-        public void To(DisplayObject ob, Tween.PropType propType, int targetNum, int millsTaken, Easing.Equations ease)
+        public static void To(DisplayObject ob, Tween.PropType propType, int targetNum, int millsTaken, Easing.Equations ease)
         {
-            tweenList.Add(new Tween(ob, propType, targetNum, millsTaken, ease));
+            thisTweenManager.tweenList.Add(new Tween(ob, propType, targetNum, millsTaken, ease));
         }
 
         public void update(GameTime gameTime)

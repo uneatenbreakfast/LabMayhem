@@ -94,7 +94,7 @@ namespace LabMayhem
 
             // Instructions
             TextField overText = new TextField();
-            overText.text = "Game Objective: Just complete this one experiment in 30 days";
+            overText.text = "Game Objective: Just complete this one, simple, easy experiment in 30 days";
             overText.x = 10;
             overText.y = 10;
             overText.setColour(Color.Wheat);
@@ -103,27 +103,28 @@ namespace LabMayhem
 
             TextField instruc_1 = new TextField();
             instruc_1.text = "Step 1: Chemicals Amalgamation";
-            instruc_1.x = 10;
+            instruc_1.x = GameMain.gameWidth;
             instruc_1.y = 30;
             instruc_1.setColour(Color.White);
             addToGUI(instruc_1);
 
             TextField instruc_2 = new TextField();
             instruc_2.text = "Step 2: Recrystalization Reaction";
-            instruc_2.x = 300;
+            instruc_2.x = GameMain.gameWidth;
             instruc_2.y = 30;
             instruc_2.setColour(Color.White * 0.5f);
             addToGUI(instruc_2);
 
             TextField instruc_3 = new TextField();
             instruc_3.text = "Step 3: Product desiccation and collection";
-            instruc_3.x = 600;
+            instruc_3.x = GameMain.gameWidth;
             instruc_3.y = 30;
             instruc_3.setColour(Color.White * 0.2f);
             addToGUI(instruc_3);
 
-            TweenManager tm = TweenManager.getInstance();
-            tm.To(instruc_3, Tween.PropType.Y, 300, 10000, Easing.Equations.QuartEaseIn); 
+            TweenManager.To(instruc_1, Tween.PropType.X, 10, 1000, Easing.Equations.QuartEaseOut);
+            TweenManager.To(instruc_2, Tween.PropType.X, 300, 1500, Easing.Equations.QuartEaseOut);
+            TweenManager.To(instruc_3, Tween.PropType.X, 600, 2000, Easing.Equations.QuartEaseOut); 
 
             fps_txt = new TextField();
             fps_txt.x = GameMain.gameWidth - fps_txt.getWidth();

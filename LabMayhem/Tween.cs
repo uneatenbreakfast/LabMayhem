@@ -13,7 +13,7 @@ namespace LabMayhem
         private int totalDuration;
 
         private float startingNumX;
-        private int targetNumX;
+        private float targetNumX;
         private DisplayObject ds;
 
         public enum PropType
@@ -28,16 +28,17 @@ namespace LabMayhem
             tweenManager = TweenManager.getInstance();
             ds = dob;
             propertyType = propType;
-            targetNumX = targetNum;
             totalDuration = timeTakenMils;
             easeType = ease;            
 
             switch(propType){
                 case PropType.X:
                     startingNumX = ds.x;
+                    targetNumX = targetNum - ds.x;
                     break;
                 case PropType.Y:
                     startingNumX = ds.y;
+                    targetNumX = targetNum - ds.y;
                     break;
             }
         }
@@ -53,8 +54,9 @@ namespace LabMayhem
                 Easing e = new Easing();
                 MethodInfo mi = e.GetType().GetMethod(easeType.ToString());
                 
+                // { milsPassed, startingPoint, tobeAddedOn, totalTweenDuration }
                 double n = (double) mi.Invoke(this, new object[] { timerNum, startingNumX, targetNumX, totalDuration });
-
+                Console.WriteLine("N:" + n);
                 switch (propertyType)
                 {
                     case PropType.X:
