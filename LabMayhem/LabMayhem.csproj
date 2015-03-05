@@ -64,6 +64,8 @@
     <Compile Include="TaskManager.cs" />
     <Compile Include="TextField.cs" />
     <Compile Include="TileObject.cs" />
+    <Compile Include="Tween.cs" />
+    <Compile Include="TweenManager.cs" />
     <Compile Include="UIButton.cs" />
     <Compile Include="ImageDisplayObject.cs" />
     <Compile Include="GameMain.cs" />

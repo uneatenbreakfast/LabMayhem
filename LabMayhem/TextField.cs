@@ -28,6 +28,11 @@ namespace LabMayhem
             activeFont = featureditem14 = gameMain.Content.Load<SpriteFont>("Fonts/featureditem-14");
         }
 
+        public void setColour(Color c)
+        {
+            colour = c;
+        }
+
 
         public SpriteFont getFont()
         {

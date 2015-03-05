@@ -20,7 +20,6 @@ namespace LabMayhem
 
         
         private TextField fps_txt;
-        private TextField mselc_txt;
 
         private UIHoverTexture cursorSelectorTexture;
 
@@ -89,14 +88,43 @@ namespace LabMayhem
             TextField wel_txt = new TextField();
             wel_txt.text = "I've been expecting you, Mr Kuan.";
             wel_txt.x = 50;
-            wel_txt.y = 50;
+            wel_txt.y = 200;
             addToGUI(wel_txt);
 
-            mselc_txt = new TextField();
-            mselc_txt.text = "Selected Material:"+selectedMaterial;
-            mselc_txt.x = GameMain.gameWidth - mselc_txt.getWidth();
-            mselc_txt.y = 20;
-            addToGUI(mselc_txt);
+
+            // Instructions
+            TextField overText = new TextField();
+            overText.text = "Game Objective: Just complete this one experiment in 30 days";
+            overText.x = 10;
+            overText.y = 10;
+            overText.setColour(Color.Wheat);
+            addToGUI(overText);
+
+
+            TextField instruc_1 = new TextField();
+            instruc_1.text = "Step 1: Chemicals Amalgamation";
+            instruc_1.x = 10;
+            instruc_1.y = 30;
+            instruc_1.setColour(Color.White);
+            addToGUI(instruc_1);
+
+            TextField instruc_2 = new TextField();
+            instruc_2.text = "Step 2: Recrystalization Reaction";
+            instruc_2.x = 300;
+            instruc_2.y = 30;
+            instruc_2.setColour(Color.White * 0.5f);
+            addToGUI(instruc_2);
+
+            TextField instruc_3 = new TextField();
+            instruc_3.text = "Step 3: Product desiccation and collection";
+            instruc_3.x = 600;
+            instruc_3.y = 30;
+            instruc_3.setColour(Color.White * 0.2f);
+            addToGUI(instruc_3);
+
+            TweenManager tm = TweenManager.getInstance();
+            tm.To(instruc_3, Tween.PropType.Y, 300, 10000); 
+
 
             fps_txt = new TextField();
             fps_txt.x = GameMain.gameWidth - fps_txt.getWidth();
@@ -142,8 +170,7 @@ namespace LabMayhem
         {
             UIButton mc = (UIButton)sender;
 
-            selectedMaterial = mc.val; ;
-            mselc_txt.text = "Selected Material:"+selectedMaterial;
+            selectedMaterial = mc.val;
 
             if (selectedMaterial == Materials.NONE)
             {

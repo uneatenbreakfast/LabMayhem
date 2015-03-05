@@ -21,6 +21,7 @@ namespace LabMayhem
         UIManager uiManager;
         Materials materialsManager;
         TaskManager taskManager;
+        TweenManager tweenManager;
 
         List<ImageDisplayObject> displayList = new List<ImageDisplayObject>();
         List<ImageDisplayObject> tempDisplayList = new List<ImageDisplayObject>();
@@ -63,6 +64,7 @@ namespace LabMayhem
             uiManager = UIManager.getInstance();
             materialsManager = Materials.getInstance();
             taskManager = TaskManager.getInstance();
+            tweenManager = TweenManager.getInstance();
 
             // Set up GUI
             uiManager.init();
@@ -84,7 +86,9 @@ namespace LabMayhem
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            tweenManager.update(gameTime);
             uiManager.update(gameTime);
+
 
 
             // get all the map tiles
