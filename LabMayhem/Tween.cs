@@ -56,7 +56,6 @@ namespace LabMayhem
                 
                 // { milsPassed, startingPoint, tobeAddedOn, totalTweenDuration }
                 double n = (double) mi.Invoke(this, new object[] { timerNum, startingNumX, targetNumX, totalDuration });
-                Console.WriteLine("N:" + n);
                 switch (propertyType)
                 {
                     case PropType.X:
